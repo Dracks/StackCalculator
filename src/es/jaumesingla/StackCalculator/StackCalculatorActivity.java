@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
+import com.google.ads.*;
 
 public class StackCalculatorActivity extends Activity {
 	private LinkedList<Double> 	stack;
@@ -17,6 +19,8 @@ public class StackCalculatorActivity extends Activity {
 	private String				write;
 	private boolean				writing;
 	private boolean				navigation;
+	
+	private AdView 				adView;
 	
 	public StackCalculatorActivity(){
 		stack=new LinkedList<Double>();
@@ -30,6 +34,13 @@ public class StackCalculatorActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main); 
         this.refreshView();
+        
+        // Look up the AdView as a resource and load a request.
+        AdView adView = (AdView)this.findViewById(R.id.adView);
+        AdRequest adRequest=new AdRequest();
+        adRequest.addTestDevice("953C629AF51EC113C8C153493876C11F");
+        adRequest.setTesting(true);
+        adView.loadAd(adRequest);
     }
     
     @Override
@@ -76,75 +87,33 @@ public class StackCalculatorActivity extends Activity {
     
     public void refreshView(){
     	EditText Display=(EditText) findViewById(R.id.Display);
-    	String show=":7\n:6\n:5\n:4\n:3\n:2\n:1";
+    	String show=":6\n:5\n:4\n:3\n:2\n:1";
     	//int i;
     	if (stack.size()>0){
     		if (navigation){
 	    		int ini,end;
-				ini=0; end=7;
+				ini=0; end=6;
 				if (index>3){
-					if (index<stack.size()-3){
-						ini=index-3;
-						end=index+3;
+					if (index<stack.size()-2){
+						ini=index-2;
+						end=index+2;
 					} else {
-						ini=stack.size()-7;
+						ini=stack.size()-5;
 						end=stack.size();
 					}
 				}
 				show=this.getText(ini,end,index);
     		} else {
     			if (writing){
-    				show=this.getText(0,6,index-1);
+    				show=this.getText(0,4,index-1);
     				show=show+write;
     			} else {
-    				show=this.getText(0,7,index-1);
+    				show=this.getText(0,5,index-1);
     			}
     		}
-			
-    		/*if (navigation){
-    			if (stack.size()<7){
-    				show="";
-    				for (i=0; i<stack.size();i++){
-    					String tag=stack.get(i).toString();
-    					if (i!=index){
-    						tag=tag+":";
-    					} else {
-    						tag=tag+"<";
-    					}
-    					
-    					show=tag+Integer.toString(i+1)+show;
-    				}
-    				
-    				for (i=stack.size(); i<7; i++){
-    					show=":"+Integer.toString(i+1)+show;
-    				}
-    				
-    			} else {
-    				
-    				
-    				show="";
-    				for (i=ini; i<end; i++){
-    				
-    					String tag=stack.get(i).toString();
-    					if (i!=index){
-    						tag=tag+":";
-    					} else {
-    						tag=tag+"<";
-    					}
-    
-    					show=tag+Integer.toString(i+1)+show;
-    				}
-    			}
-    		} else {
-    			if (writing){
-    				
-    			} else {
-    				
-    			}
-    		}*/
     	} else {
 			if (writing){
-				show=this.getText(0,6,index-1);
+				show=this.getText(0,4,index-1);
 				show=show+write;
 			} 
 		}
