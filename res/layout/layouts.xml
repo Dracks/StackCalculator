@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background3"
+    android:gravity="bottom"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/Display"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:gravity="right"
+        android:height="130dp"
+        android:inputType="textMultiLine"
+        android:lines="5" >
+
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+
+        <Button
+            android:id="@+id/bSin"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickSin"
+            android:text="sin" />
+
+        <Button
+            android:id="@+id/bCos"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickCos"
+            android:text="cos" />
+
+        <Button
+            android:id="@+id/bTan"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickTan"
+            android:text="tan" />
+
+        <Button
+            android:id="@+id/bShift"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickShift"
+            android:text="Shift" />
+
+        <Button
+            android:id="@+id/bUp"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickUp"
+            android:text="Up" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+
+        <Button
+            android:id="@+id/bEx"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickIntegralEx"
+            android:text="e^x" />
+
+        <Button
+            android:id="@+id/bLn"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickLn"
+            android:text="ln" />
+
+        <Button
+            android:id="@+id/bLog"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickLog"
+            android:text="log" />
+
+        <Button
+            android:id="@+id/bDel"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickDel"
+            android:text="Back" />
+
+        <Button
+            android:id="@+id/bDown"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickDown"
+            android:text="Down" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="7" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="8" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="9" />
+
+        <Button
+            android:id="@+id/Enter"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="fill_horizontal"
+            android:layout_weight="1"
+            android:background="@drawable/boto"
+            android:onClick="onClickEnter"
+            android:text="Enter" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="4" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="5" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="6" />
+
+        <Button
+            android:id="@+id/bAdd"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickAdd"
+            android:text="+" />
+
+        <Button
+            android:id="@+id/bSub"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickSub"
+            android:text="-" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="1" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="2" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="3" />
+
+        <Button
+            android:id="@+id/bMul"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickMul"
+            android:text="*" />
+
+        <Button
+            android:id="@+id/bDiv"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickDiv"
+            android:text="/" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="0" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickChar"
+            android:text="." />
+
+        <Button
+            android:id="@+id/bPow"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickPow"
+            android:text="^" />
+
+        <Button
+            android:id="@+id/bSqrt"
+            android:layout_width="64dp"
+            android:layout_height="50dp"
+            android:background="@drawable/boto"
+            android:onClick="onClickSqrt"
+            android:text="√" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:gravity="bottom" >
+
+        <com.google.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            ads:adSize="BANNER"
+            ads:adUnitId="a14ea5aae19fb63" />
+
+        <ViewStub
+            android:id="@+id/viewStub1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

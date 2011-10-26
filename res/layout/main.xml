@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background"
+    android:gravity="bottom"
     android:orientation="vertical" >
 
     <EditText
@@ -11,6 +13,7 @@
         android:layout_height="wrap_content"
         android:focusable="false"
         android:gravity="right"
+        android:height="130dp"
         android:inputType="textMultiLine"
         android:lines="5" >
 
@@ -19,50 +22,50 @@
 
     <TableLayout
         android:id="@+id/tableLayout1"
-        android:gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:gravity="bottom" >
 
         <TableRow
             android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="true" >
 
             <Button
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" 
-                android:onClick="onClickButton"/>
+                android:onClick="onClickButton"
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" 
-                android:onClick="onClickButton"/>
+                android:onClick="onClickButton"
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" 
-                android:onClick="onClickButton"/>
+                android:onClick="onClickButton"
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" 
-                android:onClick="onClickButton"/>
+                android:onClick="onClickButton"
+                android:text="Button" />
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="wrap_content"
+                android:layout_width="64dp"
                 android:layout_height="wrap_content"
-                android:text="Up" 
-                android:onClick="onClickUp"/>
-
+                android:onClick="onClickUp"
+                android:text="Up" />
         </TableRow>
 
         <TableRow
@@ -74,74 +77,74 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="e^x" 
-                android:onClick="onClickButton"/>
+                android:onClick="onClickButton"
+                android:text="e^x" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ln" 
-                android:onClick="onClickButton"/>
+                android:onClick="onClickButton"
+                android:text="ln" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="log" 
-                android:onClick="onClickButton"/>
+                android:onClick="onClickButton"
+                android:text="log" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back" 
-                android:onClick="onClickDel"/>
+                android:onClick="onClickDel"
+                android:text="Back" />
 
             <Button
                 android:id="@+id/button5"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Down" 
-                android:onClick="onClickDown"/>
-
+                android:onClick="onClickDown"
+                android:text="Down" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:baselineAligned="false" >
 
             <Button
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="7" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="8" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="9" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="9" />
 
             <Button
                 android:id="@+id/Enter"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="fill_horizontal"
                 android:layout_weight="1"
-                android:text="Enter" 
-                android:onClick="onClickEnter"/>
+                android:onClick="onClickEnter"
+                android:text="Enter" />
         </TableRow>
 
         <TableRow
@@ -153,38 +156,38 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="4" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="5" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="6" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+" 
-                android:onClick="onClickAdd"/>
+                android:onClick="onClickAdd"
+                android:text="+" />
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="-" 
-                android:onClick="onClickSub"/>
-
+                android:onClick="onClickSub"
+                android:text="-" />
         </TableRow>
+
         <TableRow
             android:id="@+id/tableRow5"
             android:layout_width="wrap_content"
@@ -194,37 +197,36 @@
                 android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="1" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="2" />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="3" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="*" 
-                android:onClick="onClickMul"/>
+                android:onClick="onClickMul"
+                android:text="*" />
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="/" 
-                android:onClick="onClickDiv"/>
-
+                android:onClick="onClickDiv"
+                android:text="/" />
         </TableRow>
 
         <TableRow
@@ -238,36 +240,50 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="0" 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="0" />
 
             <Button
                 android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="." 
-                android:onClick="onClickChar"/>
+                android:onClick="onClickChar"
+                android:text="." />
 
             <Button
                 android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="^" 
-                android:onClick="onClickPow"/>
+                android:onClick="onClickPow"
+                android:text="^" />
 
             <Button
                 android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="√" 
-                android:onClick="onClickSqrt"/>
+                android:onClick="onClickSqrt"
+                android:text="√" />
         </TableRow>
-
     </TableLayout>
-    <com.google.ads.AdView android:id="@+id/adView"
+
+    <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:gravity="bottom" 
+             >
+          <com.google.ads.AdView android:id="@+id/adView"
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            ads:adUnitId="a14ea5aae19fb63"
                            ads:adSize="BANNER" />
+
+        <ViewStub
+            android:id="@+id/viewStub1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        </LinearLayout>
+   
 
 </LinearLayout>
