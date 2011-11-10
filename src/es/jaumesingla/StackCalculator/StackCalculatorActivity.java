@@ -20,6 +20,7 @@ public class StackCalculatorActivity extends Activity {
 	private boolean				writing;
 	private boolean				navigation;
 	private boolean				shifted;
+	private int					nLines;
 	
 	
 	
@@ -42,6 +43,7 @@ public class StackCalculatorActivity extends Activity {
         adRequest.addTestDevice("953C629AF51EC113C8C153493876C11F");
         adRequest.setTesting(true);
         adView.loadAd(adRequest);
+        nLines=5;
     }
     
     @Override
@@ -93,28 +95,28 @@ public class StackCalculatorActivity extends Activity {
     	if (stack.size()>0){
     		if (navigation){
 	    		int ini,end;
-				ini=0; end=5;
-				if (index>2){
-					if (index<stack.size()-3){
-						ini=index-2;
-						end=index+3;
+				ini=0; end=nLines;
+				if (index>(nLines/2)){
+					if (index<stack.size()-(nLines/2+1)){
+						ini=index-(nLines/2);
+						end=index+(nLines/2+1);
 					} else {
-						ini=stack.size()-5;
+						ini=stack.size()-nLines;
 						end=stack.size();
 					}
 				}
 				show=this.getText(ini,end,index);
     		} else {
     			if (writing){
-    				show=this.getText(0,4,index-1);
+    				show=this.getText(0,nLines-1,index-1);
     				show=show+write;
     			} else {
-    				show=this.getText(0,5,index-1);
+    				show=this.getText(0,nLines,index-1);
     			}
     		}
     	} else {
 			if (writing){
-				show=this.getText(0,4,index-1);
+				show=this.getText(0,nLines-1,index-1);
 				show=show+write;
 			} 
 		}
@@ -144,13 +146,14 @@ public class StackCalculatorActivity extends Activity {
     
     public void onClickShift(View view){
     	shifted=!shifted;
-    	if (shifted){
+    	if (shifted) {
     		((Button) findViewById(R.id.bShift)).setText("Unshift");
     		((Button) findViewById(R.id.bDiv)).setText("1/x");
     		((Button) findViewById(R.id.bSub)).setText("-x");
     		((Button) findViewById(R.id.bSin)).setText("Arcsin");
     		((Button) findViewById(R.id.bCos)).setText("Arccos");
     		((Button) findViewById(R.id.bTan)).setText("Arctan");
+    		((Button) findViewById(R.id.bLn)).setText("Log");
     	} else {
     		((Button) findViewById(R.id.bShift)).setText("Shift");
     		((Button) findViewById(R.id.bDiv)).setText("/");
@@ -158,8 +161,8 @@ public class StackCalculatorActivity extends Activity {
     		((Button) findViewById(R.id.bSin)).setText("Sin");
     		((Button) findViewById(R.id.bCos)).setText("Cos");
     		((Button) findViewById(R.id.bTan)).setText("Tan");
+    		((Button) findViewById(R.id.bLn)).setText("Ln");
     	}
-    	
     }
     
     public void onClickUp(View view){
@@ -196,6 +199,20 @@ public class StackCalculatorActivity extends Activity {
     	}
     	writing=false;
     	navigation=false;
+    	this.refreshView();
+    }
+    
+    public void onClickDel(View view){
+    	Log.d("StackCalculatorActivity", "holamon-Button");
+    	if (writing){
+    		write=write.substring(0, write.length()-1);
+    	} else if (!navigation){
+    		if (stack.size()>0)
+    			stack.removeFirst();
+    	} else if (navigation){
+    		navigation=false;
+    		index=0;
+    	}
     	this.refreshView();
     }
     
@@ -292,17 +309,6 @@ public class StackCalculatorActivity extends Activity {
     	this.refreshView();
     }
     
-    public void onClickDel(View view){
-    	Log.d("StackCalculatorActivity", "holamon-Button");
-    	if (writing){
-    		write=write.substring(0, write.length()-1);
-    	} else if (!navigation){
-    		if (stack.size()>0)
-    			stack.removeFirst();
-    	}
-    	this.refreshView();
-    }
-    
     public void onClickSin(View view){
     	if (stack.size()>=1 && !writing && !navigation){
     		double a=stack.getFirst().doubleValue();
@@ -348,25 +354,23 @@ public class StackCalculatorActivity extends Activity {
     		stack.addFirst(new Double(Math.pow(Math.E, a)));
     	}
     	this.refreshView();
-
     }
     
     public void onClickLn(View view){
     	if (stack.size()>=1 && !writing && !navigation){
     		double a=stack.getFirst().doubleValue();
     		stack.removeFirst();
-    		//if (!shifted)
-    		stack.addFirst(new Double(Math.log(a)));
+    		if (shifted)
+    			stack.addFirst(new Double(Math.log10(a)));
+    		else 
+    			stack.addFirst(new Double(Math.log(a)));
     	}
     	this.refreshView();
     }
     
-    public void onClickLog(View view){
+    public void onClickPi(View view){
     	if (stack.size()>=1 && !writing && !navigation){
-    		double a=stack.getFirst().doubleValue();
-    		stack.removeFirst();
-    		//if (!shifted)
-    		stack.addFirst(new Double(Math.log10(a)));
+    		stack.addFirst(new Double(Math.PI));
     	}
     	this.refreshView();
     }

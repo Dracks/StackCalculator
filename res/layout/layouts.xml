@@ -3,14 +3,14 @@
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/background3"
+    android:background="@drawable/background4"
     android:gravity="bottom"
     android:orientation="vertical" >
 
     <EditText
         android:id="@+id/Display"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:focusable="false"
         android:gravity="right"
         android:height="130dp"
@@ -94,8 +94,8 @@
             android:layout_width="64dp"
             android:layout_height="50dp"
             android:background="@drawable/boto"
-            android:onClick="onClickLog"
-            android:text="log" />
+            android:onClick="onClickPi"
+            android:text="π" />
 
         <Button
             android:id="@+id/bDel"
