@@ -3,18 +3,23 @@ package es.jaumesingla.StackCalculator;
 import java.util.LinkedList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 //import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
 
+import android.widget.PopupWindow;
 import com.google.ads.*;
 
 import es.jaumesingla.StackCalculator.AngleConversor.ConversorInterface;
@@ -32,6 +37,7 @@ public class StackCalculatorActivity extends Activity {
 	private boolean shifted;
 	private int nLines;
 	private ConversorInterface conv;
+	private PopupWindow pw;
 
 	public StackCalculatorActivity() {
 		stack = new LinkedList<Double>();
@@ -119,6 +125,25 @@ public class StackCalculatorActivity extends Activity {
 				this.conv = new RadiantConversor();
 		}
 	}
+	
+	private void initiatePopupWindow(int layer) {
+    try {
+        //We need to get the instance of the LayoutInflater, use the context of this activity
+        LayoutInflater inflater = (LayoutInflater) StackCalculatorActivity.this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //Inflate the view from a predefined XML layout
+        View layout = inflater.inflate(layer,
+                (ViewGroup) findViewById(R.id.AboutContents));
+        // create a 300px width and 470px height PopupWindow
+        pw = new PopupWindow(layout, 350, 480, true);
+        // display the popup in the center
+        pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+		
+ 
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -137,30 +162,8 @@ public class StackCalculatorActivity extends Activity {
 				menu.findItem(R.id.oDegree).setChecked(true);
 			break;
 		}
-
-		Log.d("StackCalculatorActivity", "onCreateOptions: " + menu.getItem(0).getSubMenu().getItem(0).getTitle() + " / " + Integer.toString(conv.getID()));
-		Log.d("StackCalculatorActivity", "onCreateOptions: " + menu.getItem(0).getSubMenu().getItem(1).getTitle() + " / " + Integer.toString(conv.getID()));
 		return true;
 	}
-	
-	/*@Override
-	public boolean onMenuOpened(int featureId, Menu menu){
-		Log.d("StackCalculatorActivity", "onMenuOpened");
-		if (menu.findItem(R.id.oDegree)!=null){
-			switch (conv.getID()){
-				case 0:
-					menu.findItem(R.id.oRad).setChecked(true);
-				break;
-				case 1:
-					menu.findItem(R.id.oDegree).setChecked(true);
-				break;
-			}//*
-			//menu.findItem(R.id.oDegree).setChecked(1 == conv.getID());
-			//menu.findItem(R.id.oRad).setChecked(0 == conv.getID());
-			return true;
-		}//*
-		return true;
-	}//*/
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -169,7 +172,6 @@ public class StackCalculatorActivity extends Activity {
 		switch (item.getItemId()) {
 			case R.id.oConfig:
 				item.getSubMenu().setGroupCheckable(R.id.gAngle, true, true);
-				
 				return true;
 			case R.id.oDegree:
 				Log.d("StackCalculatorActivity", "oDegree");
@@ -182,6 +184,7 @@ public class StackCalculatorActivity extends Activity {
 				conv=new RadiantConversor();
 				return true;
 			case R.id.oAbout:
+				this.initiatePopupWindow(R.layout.about);
 				return true;
 			case R.id.oHelp:
 				return true;
@@ -559,6 +562,11 @@ public class StackCalculatorActivity extends Activity {
 			stack.addFirst(new Double(Math.PI));
 		}
 		this.refreshView();
+	}
+	
+	public void onClickClose(View view) {
+		pw.dismiss();
+
 	}
 	/*public void onClick(View view){
 	Log.d("StackCalculatorActivity", "holamon-Button");
