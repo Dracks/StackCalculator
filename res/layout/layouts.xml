@@ -15,7 +15,7 @@
         android:focusable="false"
         android:gravity="fill_vertical|right"
         android:inputType="textMultiLine" 
-        android:lines="3">
+        >
 
         <requestFocus />
     </EditText>
