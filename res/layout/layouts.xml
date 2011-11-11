@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:id="@+id/Contingut"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/background4"
     android:gravity="bottom"
     android:orientation="vertical" >
@@ -10,18 +11,17 @@
     <EditText
         android:id="@+id/Display"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="false"
-        android:gravity="right"
-        android:height="130dp"
-        android:inputType="textMultiLine"
-        android:lines="5" >
+        android:gravity="fill_vertical|right"
+        android:inputType="textMultiLine" 
+        android:lines="3">
 
         <requestFocus />
     </EditText>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false" >
@@ -68,7 +68,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false" >
@@ -103,7 +103,7 @@
             android:layout_height="50dp"
             android:background="@drawable/boto"
             android:onClick="onClickDel"
-            android:text="Back" />
+            android:text="Delete" />
 
         <Button
             android:id="@+id/bDown"
@@ -115,7 +115,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false" >
@@ -156,7 +156,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout5"
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false" >
@@ -203,7 +203,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout6"
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false" >
@@ -250,7 +250,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout7"
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false" >
@@ -289,15 +289,9 @@
             android:text="√" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false" >
-    </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout7"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
         android:gravity="bottom" >

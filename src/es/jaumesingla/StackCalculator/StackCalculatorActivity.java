@@ -5,7 +5,9 @@ import java.util.LinkedList;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+//import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -33,17 +35,48 @@ public class StackCalculatorActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	//Creació
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layouts); 
-        this.refreshView();
+        //this.refreshView();
         
+        //Publicitat
         // Look up the AdView as a resource and load a request.
         AdView adView = (AdView)this.findViewById(R.id.adView);
         AdRequest adRequest=new AdRequest();
-        adRequest.addTestDevice("953C629AF51EC113C8C153493876C11F");
+        //adRequest.addTestDevice("953C629AF51EC113C8C153493876C11F");
         adRequest.setTesting(true);
         adView.loadAd(adRequest);
-        nLines=5;
+        
+        
+        //nLines=5;
+    }
+    
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+     // TODO Auto-generated method stub
+     super.onWindowFocusChanged(hasFocus);
+     
+     
+     //Calcul de tamany de la pantalla
+     View contentView= this.findViewById(R.id.Contingut);
+     int alcadaTotal=contentView.getHeight();
+     Log.i("stackCalculatorActivity", "Pre Alçada total de:"+Integer.toString(alcadaTotal));
+     alcadaTotal-=this.findViewById(R.id.linearLayout1).getHeight();
+     alcadaTotal-=this.findViewById(R.id.linearLayout2).getHeight();
+     alcadaTotal-=this.findViewById(R.id.linearLayout3).getHeight();
+     alcadaTotal-=this.findViewById(R.id.linearLayout4).getHeight();
+     alcadaTotal-=this.findViewById(R.id.linearLayout5).getHeight();
+     alcadaTotal-=this.findViewById(R.id.linearLayout6).getHeight();
+     alcadaTotal-=this.findViewById(R.id.linearLayout7).getHeight();
+     //this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
+     EditText Display=(EditText) this.findViewById(R.id.Display);
+     Display.getLayoutParams().height=alcadaTotal;
+     nLines=alcadaTotal/Display.getLineHeight()-1;
+     Log.i("stackCalculatorActivity", "Alçada total de:"+Integer.toString(alcadaTotal));
+     
+     this.refreshView();
+     //updateSizeInfo();
     }
     
     @Override
@@ -80,26 +113,30 @@ public class StackCalculatorActivity extends Activity {
     			} else {
     				c='<';
     			}
-    			show=stack.get(i).toString()+c+Integer.toString(i+1)+"\n"+show;
+    			show=stack.get(i).toString()+c+Integer.toString(i+1)+show;
     		} else {
-    			show=":"+Integer.toString(i+1)+"\n"+show;
+    			show=":"+Integer.toString(i+1)+show;
     		}
+    		if (i<end-1)
+    			show="\n"+show;
     	}
     	return show;
     }
     
     public void refreshView(){
     	EditText Display=(EditText) findViewById(R.id.Display);
-    	String show=":5\n:4\n:3\n:2\n:1";
+    	String show=this.getText(0,  nLines, index-1);
     	//int i;
+    	int impar=(nLines)%2;
+    	//int par=(nLines+1)%2;
     	if (stack.size()>0){
     		if (navigation){
 	    		int ini,end;
 				ini=0; end=nLines;
 				if (index>(nLines/2)){
-					if (index<stack.size()-(nLines/2+1)){
+					if (index<stack.size()-(nLines/2+impar)){
 						ini=index-(nLines/2);
-						end=index+(nLines/2+1);
+						end=index+(nLines/2+impar);
 					} else {
 						ini=stack.size()-nLines;
 						end=stack.size();
@@ -109,7 +146,7 @@ public class StackCalculatorActivity extends Activity {
     		} else {
     			if (writing){
     				show=this.getText(0,nLines-1,index-1);
-    				show=show+write;
+    				show=show+"\n"+write;
     			} else {
     				show=this.getText(0,nLines,index-1);
     			}
@@ -117,7 +154,7 @@ public class StackCalculatorActivity extends Activity {
     	} else {
 			if (writing){
 				show=this.getText(0,nLines-1,index-1);
-				show=show+write;
+				show=show+"\n"+write;
 			} 
 		}
     	Display.setText(show);
@@ -137,6 +174,34 @@ public class StackCalculatorActivity extends Activity {
     		Log.d("StackCalculatorActivity", tmp);
     		Log.d("StackCalculatorActivity", e.toString());
     	}
+    }
+    
+    public boolean onKeyDown(int keyCode, KeyEvent e){
+    	Log.d("StackCalculatorActivity", "KeyCode:"+Integer.toString(keyCode));
+    	if (keyCode==KeyEvent.KEYCODE_0 || keyCode==KeyEvent.KEYCODE_1|| keyCode==KeyEvent.KEYCODE_2 || 
+    			keyCode==KeyEvent.KEYCODE_3 || keyCode==KeyEvent.KEYCODE_4 || keyCode==KeyEvent.KEYCODE_5 || 
+    			keyCode==KeyEvent.KEYCODE_6 || keyCode==KeyEvent.KEYCODE_7 || keyCode==KeyEvent.KEYCODE_8 || keyCode==KeyEvent.KEYCODE_9){
+    		this.addValue(Integer.toString(keyCode- KeyEvent.KEYCODE_0));
+    		return true;
+    	} else if (keyCode==KeyEvent.KEYCODE_PERIOD){
+    		this.addValue(".");
+    		return true;
+    	} else if (keyCode==KeyEvent.KEYCODE_ENTER){
+    		if (writing){
+        		stack.addFirst(new Double(write));
+        		write="";
+        	} else {
+        		if (stack.size()>0){
+        			stack.addFirst(stack.get(index));
+        			index=0;
+        		}
+        	}
+        	writing=false;
+        	navigation=false;
+        	this.refreshView();
+    		return true;
+    	}
+    	return false;
     }
     
     public void onClickButton(View view){
@@ -173,6 +238,9 @@ public class StackCalculatorActivity extends Activity {
     		else if (stack.size()>index+1)
     			index++;
     		this.refreshView();
+    		
+    		Button back=(Button)this.findViewById(R.id.bDel);
+    		back.setText("Cancel");
     	}
     	
     }
@@ -183,6 +251,9 @@ public class StackCalculatorActivity extends Activity {
     		if (index>0)
     			index--;
     		this.refreshView();
+    		
+    		Button back=(Button)this.findViewById(R.id.bDel);
+    		back.setText("Cancel");
     	}
     	
     }
@@ -195,6 +266,10 @@ public class StackCalculatorActivity extends Activity {
     		if (stack.size()>0){
     			stack.addFirst(stack.get(index));
     			index=0;
+    			if (navigation){
+    				Button back=(Button)this.findViewById(R.id.bDel);
+    	    		back.setText("Delete");
+    			}
     		}
     	}
     	writing=false;
@@ -212,6 +287,8 @@ public class StackCalculatorActivity extends Activity {
     	} else if (navigation){
     		navigation=false;
     		index=0;
+    		Button back=(Button)this.findViewById(R.id.bDel);
+    		back.setText("Delete");
     	}
     	this.refreshView();
     }
