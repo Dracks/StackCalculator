@@ -125,15 +125,42 @@ public class StackCalculatorActivity extends Activity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.base_options, menu);
 
-		menu.getItem(0).getSubMenu().setGroupCheckable(menu.getItem(0).getSubMenu().getItem(0).getGroupId(), true, false);
+		menu.getItem(0).getSubMenu().setGroupCheckable(menu.getItem(0).getSubMenu().getItem(0).getGroupId(), true, true);
 		//menu.getItem(0).getSubMenu().getItem(0).setChecked(0 == conv.getID());
 		//.getItem(0).getSubMenu().getItem(1).setChecked(1 == conv.getID());
-
+		
+		switch (conv.getID()){
+			case 0:
+				menu.findItem(R.id.oRad).setChecked(true);
+			break;
+			case 1:
+				menu.findItem(R.id.oDegree).setChecked(true);
+			break;
+		}
 
 		Log.d("StackCalculatorActivity", "onCreateOptions: " + menu.getItem(0).getSubMenu().getItem(0).getTitle() + " / " + Integer.toString(conv.getID()));
 		Log.d("StackCalculatorActivity", "onCreateOptions: " + menu.getItem(0).getSubMenu().getItem(1).getTitle() + " / " + Integer.toString(conv.getID()));
 		return true;
 	}
+	
+	/*@Override
+	public boolean onMenuOpened(int featureId, Menu menu){
+		Log.d("StackCalculatorActivity", "onMenuOpened");
+		if (menu.findItem(R.id.oDegree)!=null){
+			switch (conv.getID()){
+				case 0:
+					menu.findItem(R.id.oRad).setChecked(true);
+				break;
+				case 1:
+					menu.findItem(R.id.oDegree).setChecked(true);
+				break;
+			}//*
+			//menu.findItem(R.id.oDegree).setChecked(1 == conv.getID());
+			//menu.findItem(R.id.oRad).setChecked(0 == conv.getID());
+			return true;
+		}//*
+		return true;
+	}//*/
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -141,16 +168,17 @@ public class StackCalculatorActivity extends Activity {
 		Log.d("StackCalculatorACtivity", "onOptionsItemSelected " + Integer.toString(item.getItemId()));
 		switch (item.getItemId()) {
 			case R.id.oConfig:
-				//item.getSubMenu().setGroupCheckable(menu.getItem(0).getSubMenu().getItem(0).getGroupId(), true, false);
-				item.getSubMenu().getItem(0).setChecked(0 == conv.getID());
-				item.getSubMenu().getItem(1).setChecked(1 == conv.getID());
+				item.getSubMenu().setGroupCheckable(R.id.gAngle, true, true);
+				
 				return true;
 			case R.id.oDegree:
 				Log.d("StackCalculatorActivity", "oDegree");
+				item.setChecked(true);
 				conv=new DegreeConversor();
 				return true;
 			case R.id.oRad:
 				Log.d("StackCalculatorActivity", "oRad");
+				item.setChecked(true);
 				conv=new RadiantConversor();
 				return true;
 			case R.id.oAbout:
