@@ -126,18 +126,21 @@ public class StackCalculatorActivity extends Activity {
 		}
 	}
 	
-	private void initiatePopupWindow(int layer) {
+	private void initiatePopupWindow(int layer, int layout_id) {
     try {
         //We need to get the instance of the LayoutInflater, use the context of this activity
         LayoutInflater inflater = (LayoutInflater) StackCalculatorActivity.this
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //Inflate the view from a predefined XML layout
         View layout = inflater.inflate(layer,
-                (ViewGroup) findViewById(R.id.AboutContents));
+                (ViewGroup) findViewById(layout_id));
         // create a 300px width and 470px height PopupWindow
         pw = new PopupWindow(layout, 350, 480, true);
         // display the popup in the center
         pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+		
+		//layout.setOnKeyListener(this);
+		//layout.setOnTouchListener(this);
 		
  
     } catch (Exception e) {
@@ -184,9 +187,10 @@ public class StackCalculatorActivity extends Activity {
 				conv=new RadiantConversor();
 				return true;
 			case R.id.oAbout:
-				this.initiatePopupWindow(R.layout.about);
+				this.initiatePopupWindow(R.layout.about, R.id.AboutContents);
 				return true;
 			case R.id.oHelp:
+				this.initiatePopupWindow(R.layout.help, R.id.lHelp);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -302,6 +306,9 @@ public class StackCalculatorActivity extends Activity {
 			navigation = false;
 			this.refreshView();
 			return true;
+		} else if (keyCode==KeyEvent.KEYCODE_BACK){
+			if (pw!=null)
+				pw.dismiss();
 		}
 		return false;
 	}

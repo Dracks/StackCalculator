@@ -7,8 +7,16 @@
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical" >
 		
-	<TextView android:gravity="center" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="@string/app_name" android:textSize="25sp" android:textColor="#000000"/>
-	<TextView android:gravity="center" android:layout_height="wrap_content" android:layout_width="match_parent" android:text="Programed by\nJaume Singla Valls"  android:textColor="#000000"/>
+	<TextView android:gravity="center" 
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent" 
+		android:text="@string/app_name" 
+		android:textSize="25dp" 
+		android:textColor="#000000"/>
+	<TextView android:gravity="center" 
+		android:layout_height="wrap_content" 
+		android:layout_width="match_parent" 
+		android:text="\n\nProgramed by\nJaume Singla Valls\n\nDessign by\nFrancesc Padros\n\n"  android:textColor="#000000"/>
 	<Button android:background="@drawable/boto" android:onClick="onClickClose" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Close"/>
 
 </LinearLayout>
