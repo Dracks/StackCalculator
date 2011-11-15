@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">StackCalculator</string>
-	<string name="helpText"></string>
-
+	<string name="tutorial_text_1">	The diference between a normal calculator and a stack Calculator, is that in the normal calculator you have only a field with a value, and in the stack calculator you have a field stack of calculator</string>
+	<string name="tutorial_text_2">	When you insert the values and operations in a stack calculator, you need to insert first the values, and when you have the two values if the operation is with two values, you can apply the operation.</string>
+	<string name="tutorial_text_3">	For insert a value, you need to write the value with the number buttons and dot button, and press enter. For example, if you wish do the operation 2 add 5, you first touch the button 2 and enter, and then touch the button 5 and enter; now you can push the operation add for resolve the operation.</string>
+	<string name="tutorial_text_4">	In a stack calculator you can browse between the numbers in the stack, and copy it to bottom of this. You should use the button up and down, to navigate in the stack, and use boton enter to copy a value to the bottom, if you wish cancel navigation, you only need touch the cancel button.</string>
 </resources>
