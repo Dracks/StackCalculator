@@ -17,6 +17,10 @@
 		android:layout_height="wrap_content" 
 		android:layout_width="match_parent" 
 		android:text="\n\nProgramed by\nJaume Singla Valls\n\nDessign by\nFrancesc Padros\n\n"  android:textColor="#000000"/>
-	<Button android:background="@drawable/boto" android:onClick="onClickClose" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Close"/>
+	<Button android:background="@drawable/boto" 
+		android:onClick="onClickClose" 
+		android:layout_height="50dp"
+		android:layout_width="wrap_content" 
+		android:text="Close"/>
 
 </LinearLayout>
