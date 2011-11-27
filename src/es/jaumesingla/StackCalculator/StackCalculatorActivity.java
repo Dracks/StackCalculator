@@ -58,6 +58,7 @@ public class StackCalculatorActivity extends Activity {
 		AdView adView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest();
 		adRequest.addTestDevice("953C629AF51EC113C8C153493876C11F");
+		// adRequest.setTestDevices("953C629AF51EC113C8C153493876C11F");
 		adRequest.setTesting(true);
 		adView.loadAd(adRequest);
 
@@ -135,7 +136,12 @@ public class StackCalculatorActivity extends Activity {
         View layout = inflater.inflate(layer,
                 (ViewGroup) findViewById(layout_id));
         // create a 300px width and 470px height PopupWindow
-        pw = new PopupWindow(layout, 350, 480, true);
+        View contentView = this.findViewById(R.id.Contingut);
+		//contentView.getHeight();
+		
+        pw = new PopupWindow(layout, contentView.getWidth()-40, contentView.getHeight()-40, true);
+        
+        //pw.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         // display the popup in the center
         pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
 		
