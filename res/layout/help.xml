@@ -13,13 +13,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         
-        <LinearLayout 
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:gravity="center"
             android:isScrollContainer="true"
-            >
-
+            android:orientation="vertical" >
+            
         <TextView
             android:id="@+id/textView1"
             android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:textColor="#000000" />
         
         <Button 
-			android:background="@drawable/boto" 
+			android:background="@drawable/boto_quad_llarg" 
 			android:layout_height="50dp" 
 			android:onClick="onClickClose" 
 			android:layout_width="wrap_content" 

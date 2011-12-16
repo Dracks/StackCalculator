@@ -74,7 +74,7 @@ public class StackCalculatorActivity extends Activity {
 		//Calcul de tamany de la pantalla
 		View contentView = this.findViewById(R.id.Contingut);
 		int alcadaTotal = contentView.getHeight();
-		Log.i("stackCalculatorActivity", "Pre Al�ada total de:" + Integer.toString(alcadaTotal));
+		//Log.i("stackCalculatorActivity", "Pre Al�ada total de:" + Integer.toString(alcadaTotal));
 		alcadaTotal -= this.findViewById(R.id.linearLayout1).getHeight();
 		alcadaTotal -= this.findViewById(R.id.linearLayout2).getHeight();
 		alcadaTotal -= this.findViewById(R.id.linearLayout3).getHeight();
@@ -86,7 +86,7 @@ public class StackCalculatorActivity extends Activity {
 		EditText Display = (EditText) this.findViewById(R.id.Display);
 		Display.getLayoutParams().height = alcadaTotal;
 		nLines = alcadaTotal / Display.getLineHeight() - 1;
-		Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
+		//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
 
 		this.refreshView();
 		//updateSizeInfo();
@@ -177,18 +177,18 @@ public class StackCalculatorActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
-		Log.d("StackCalculatorACtivity", "onOptionsItemSelected " + Integer.toString(item.getItemId()));
+		//Log.d("StackCalculatorACtivity", "onOptionsItemSelected " + Integer.toString(item.getItemId()));
 		switch (item.getItemId()) {
 			case R.id.oConfig:
 				item.getSubMenu().setGroupCheckable(R.id.gAngle, true, true);
 				return true;
 			case R.id.oDegree:
-				Log.d("StackCalculatorActivity", "oDegree");
+				//Log.d("StackCalculatorActivity", "oDegree");
 				item.setChecked(true);
 				conv=new DegreeConversor();
 				return true;
 			case R.id.oRad:
-				Log.d("StackCalculatorActivity", "oRad");
+				//Log.d("StackCalculatorActivity", "oRad");
 				item.setChecked(true);
 				conv=new RadiantConversor();
 				return true;
@@ -268,11 +268,11 @@ public class StackCalculatorActivity extends Activity {
 			}
 		}
 		Display.setText(show);
-		Log.d("StackCalculatorActivity", "refreshView");
+		//Log.d("StackCalculatorActivity", "refreshView");
 	}
 
 	public void addValue(String c) {
-		Log.d("StackCalculatorActivity", write);
+		//Log.d("StackCalculatorActivity", write);
 		String tmp = write + c;
 		try {
 			@SuppressWarnings("unused")
@@ -287,7 +287,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public boolean onKeyDown(int keyCode, KeyEvent e) {
-		Log.d("StackCalculatorActivity", "KeyCode:" + Integer.toString(keyCode));
+		//Log.d("StackCalculatorActivity", "KeyCode:" + Integer.toString(keyCode));
 		if (keyCode == KeyEvent.KEYCODE_0 || keyCode == KeyEvent.KEYCODE_1 || keyCode == KeyEvent.KEYCODE_2
 				|| keyCode == KeyEvent.KEYCODE_3 || keyCode == KeyEvent.KEYCODE_4 || keyCode == KeyEvent.KEYCODE_5
 				|| keyCode == KeyEvent.KEYCODE_6 || keyCode == KeyEvent.KEYCODE_7 || keyCode == KeyEvent.KEYCODE_8 || keyCode == KeyEvent.KEYCODE_9) {
@@ -320,7 +320,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickButton(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 
 	}
 
@@ -346,7 +346,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickUp(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (!writing) {
 			if (!navigation) {
 				navigation = true;
@@ -362,7 +362,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickDown(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (!writing) {
 			if (index > 0) {
 				index--;
@@ -398,7 +398,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickDel(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (writing) {
 			write = write.substring(0, write.length() - 1);
 		} else if (!navigation) {
@@ -415,13 +415,13 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickChar(View view) {
-		Log.d("StackCalculatorActivity", ((Button) view).getText().toString());
+		//Log.d("StackCalculatorActivity", ((Button) view).getText().toString());
 		this.addValue(((Button) view).getText().toString());
 
 	}
 
 	public void onClickAdd(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (stack.size() >= 2 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
@@ -433,7 +433,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickSub(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (shifted && stack.size() >= 1 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
@@ -456,7 +456,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickMul(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (stack.size() >= 2 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
@@ -469,7 +469,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickDiv(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (stack.size() >= 2 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
@@ -485,7 +485,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickPow(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (stack.size() >= 2 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
@@ -498,7 +498,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickSqrt(View view) {
-		Log.d("StackCalculatorActivity", "holamon-Button");
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (stack.size() >= 1 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
