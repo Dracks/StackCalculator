@@ -4,8 +4,8 @@
         android:id="@+id/lHelp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/pop_up"
-        android:padding="15dp"
+        android:background="@drawable/popie_1"
+        android:padding="30dp"
 		>
 
      <ScrollView android:id="@+id/linearLayout1"

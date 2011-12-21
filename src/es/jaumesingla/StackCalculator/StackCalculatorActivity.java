@@ -139,7 +139,7 @@ public class StackCalculatorActivity extends Activity {
         View contentView = this.findViewById(R.id.Contingut);
 		//contentView.getHeight();
 		
-        pw = new PopupWindow(layout, contentView.getWidth()-40, contentView.getHeight()-40, true);
+        pw = new PopupWindow(layout, contentView.getWidth()-20, contentView.getHeight()-20, true);
         
         //pw.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         // display the popup in the center
@@ -416,7 +416,9 @@ public class StackCalculatorActivity extends Activity {
 
 	public void onClickChar(View view) {
 		//Log.d("StackCalculatorActivity", ((Button) view).getText().toString());
-		this.addValue(((Button) view).getText().toString());
+		if (!navigation){
+			this.addValue(((Button) view).getText().toString());
+		}
 
 	}
 
