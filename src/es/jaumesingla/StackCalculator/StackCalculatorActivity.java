@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -150,7 +151,7 @@ public class StackCalculatorActivity extends Activity {
         // display the popup in the center
         pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
         
-        WebView wv=(WebView)layout.findViewById(R.id.webView1);
+       /* WebView wv=(WebView)layout.findViewById(R.id.webView1);
         if (wv!=null){
 	        String data = "<html><body style='text-align:justify; background: rgba(0,0,0,0)'>" +
 	        		"<p>" + getString(R.string.tutorial_text_1)+ "</p>" +
@@ -160,7 +161,7 @@ public class StackCalculatorActivity extends Activity {
 	        		"</body></html>";
 	        wv.loadData(data, "text/html", "UTF-8");
 	        
-        }
+        }*/
 		
 		//layout.setOnKeyListener(this);
 		//layout.setOnTouchListener(this);
@@ -213,7 +214,12 @@ public class StackCalculatorActivity extends Activity {
 				this.initiatePopupWindow(R.layout.about, R.id.AboutContents, 0.25f);
 				return true;
 			case R.id.oHelp:
-				this.initiatePopupWindow(R.layout.help, R.id.lHelp, 0.0f);
+				//this.initiatePopupWindow(R.layout.help, R.id.lHelp, 0.0f);
+				
+				Intent intentMain = new Intent(this, Help.class);
+	            this.startActivity(intentMain);
+	            Log.i("Content "," Main layout ");
+				
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

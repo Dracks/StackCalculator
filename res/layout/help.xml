@@ -4,7 +4,7 @@
         android:id="@+id/lHelp"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/popie_2"
+        android:background="@android:color/background_light"
         android:padding="15dp"
         android:gravity="bottom"
     	android:orientation="vertical"
@@ -13,7 +13,7 @@
      <ScrollView android:id="@+id/linearLayout1"
          android:scrollbarStyle="insideOverlay"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
         
         <LinearLayout
             android:layout_width="fill_parent"
@@ -21,22 +21,63 @@
             android:gravity="center"
             android:isScrollContainer="true"
             android:orientation="vertical" >
-
-			 <WebView
-		        android:id="@+id/webView1"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        android:background="#000000" 
-		        />    
-
-        </LinearLayout>
-       </ScrollView>
-       <Button
+            
+        <TextView
+            android:id="@+id/tHelp1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="25dp"
+            android:textColor="#000000" />
+ 
+        <TextView
+            android:id="@+id/tHelp2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/tutorial_text_1"
+            android:textColor="#000000" />
+        
+        <TextView
+            android:id="@+id/tHelp3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/tutorial_text_2"
+            android:textColor="#000000" />
+        
+        <TextView
+            android:id="@+id/tHelp4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/tutorial_text_3"
+            android:textColor="#000000" />
+        
+        <TextView
+            android:id="@+id/tHelp5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/tutorial_text_4"
+            android:textColor="#000000" />
+        
+         <Button
                 android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/boto_quad_llarg"
                 android:onClick="onClickClose"
                 android:text="CLOSE" />
+			<!--  <WebView
+		        android:id="@+id/webView1"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:background="#000000" 
+		        /> -->     
+
+        </LinearLayout>
+       </ScrollView>
     </LinearLayout>
 
