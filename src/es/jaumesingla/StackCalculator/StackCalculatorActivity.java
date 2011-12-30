@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 //import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -127,7 +128,7 @@ public class StackCalculatorActivity extends Activity {
 		}
 	}
 	
-	private void initiatePopupWindow(int layer, int layout_id) {
+	private void initiatePopupWindow(int layer, int layout_id, float margin) {
     try {
         //We need to get the instance of the LayoutInflater, use the context of this activity
         LayoutInflater inflater = (LayoutInflater) StackCalculatorActivity.this
@@ -136,14 +137,30 @@ public class StackCalculatorActivity extends Activity {
         View layout = inflater.inflate(layer,
                 (ViewGroup) findViewById(layout_id));
         // create a 300px width and 470px height PopupWindow
-        View contentView = this.findViewById(R.id.Contingut);
+        //View contentView = this.findViewById(R.id.Contingut);
 		//contentView.getHeight();
+        
+        View contentView = this.findViewById(R.id.Contingut);
+		int alcadaTotal = contentView.getHeight();
+		int ampladaTotal= contentView.getWidth();
 		
-        pw = new PopupWindow(layout, contentView.getWidth()-20, contentView.getHeight()-20, true);
+        pw = new PopupWindow(layout, contentView.getWidth()-(int)( ampladaTotal*margin), contentView.getHeight()-(int)(alcadaTotal*margin), true);
         
         //pw.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         // display the popup in the center
         pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+        
+        WebView wv=(WebView)layout.findViewById(R.id.webView1);
+        if (wv!=null){
+	        String data = "<html><body style='text-align:justify; background: rgba(0,0,0,0)'>" +
+	        		"<p>" + getString(R.string.tutorial_text_1)+ "</p>" +
+	        		"<p>" + getString(R.string.tutorial_text_2)+ "</p>" +
+	        		"<p>" + getString(R.string.tutorial_text_3)+ "</p>" +
+	        		"<p>" + getString(R.string.tutorial_text_4)+ "</p>" +
+	        		"</body></html>";
+	        wv.loadData(data, "text/html", "UTF-8");
+	        
+        }
 		
 		//layout.setOnKeyListener(this);
 		//layout.setOnTouchListener(this);
@@ -193,10 +210,10 @@ public class StackCalculatorActivity extends Activity {
 				conv=new RadiantConversor();
 				return true;
 			case R.id.oAbout:
-				this.initiatePopupWindow(R.layout.about, R.id.AboutContents);
+				this.initiatePopupWindow(R.layout.about, R.id.AboutContents, 0.25f);
 				return true;
 			case R.id.oHelp:
-				this.initiatePopupWindow(R.layout.help, R.id.lHelp);
+				this.initiatePopupWindow(R.layout.help, R.id.lHelp, 0.0f);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
