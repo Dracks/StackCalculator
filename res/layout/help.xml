@@ -66,16 +66,9 @@
          <Button
                 android:layout_width="120dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:background="@drawable/boto_quad_llarg"
                 android:onClick="onClickClose"
-                android:text="CLOSE" />
-			<!--  <WebView
-		        android:id="@+id/webView1"
-		        android:layout_width="match_parent"
-		        android:layout_height="match_parent"
-		        android:background="#000000" 
-		        /> -->     
+                android:text="CLOSE" />    
 
         </LinearLayout>
        </ScrollView>

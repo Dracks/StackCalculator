@@ -3,6 +3,8 @@ package es.jaumesingla.StackCalculator;
 import java.util.Random;
 
 import android.app.Activity;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +20,7 @@ public class Help extends Activity {
 	}
 	
 	public void justifyTextView(TextView v, String text){
-		Random r=new Random();
+		Random r=new Random(31415);
 		
 		String[] listText=text.split(" ");
 		String[] linia;
@@ -33,9 +35,18 @@ public class Help extends Activity {
 		
 		char sep='\t';
 		
+		
+		/*Rect bounds = new Rect();
+		Paint textPaint = v.getPaint();
+		textPaint.getTextBounds(text,0,text.length(),bounds);
+		int height = bounds.height();
+		int width = bounds.width();*/
+		
 		v.setText(saved+sep+tmp);
 		while (endText<listText.length-1){
 			tmp="";
+			//textPaint.getTextBounds(text, index, count, bounds);
+			
 			while (v.getLineCount()==nLines && endText<listText.length){
 				tmp=tmp+" "+listText[endText];
 				endText++;
@@ -43,7 +54,10 @@ public class Help extends Activity {
 			}
 			if (endText<listText.length)
 				endText--;
-			Log.d("Help-JustifiViewText", Integer.toString(v.getLineCount()));
+			else 
+				break;
+			//Log.d("Help-JustifiViewText", tmp);
+			//Log.d("Help-JustifiViewText", Integer.toString(v.getLineCount()));
 			
 			linia=new String[endText-iniText];
 			espaiat=new String[endText-iniText-1];
@@ -64,6 +78,7 @@ public class Help extends Activity {
 			}
 			v.setText(saved+sep+tmp);
 			
+			
 			while (v.getLineCount()==nLines){
 				addSpaced= (addSpaced+1) % espaiat.length;
 				espaiat[addSpaced]+=" ";
@@ -71,10 +86,9 @@ public class Help extends Activity {
 				for (int i=0; i<espaiat.length;i++){
 					tmp+=espaiat[i]+linia[i+1];
 				}
+				//Log.d("Help-JustifiViewText", "otra mas");
 				v.setText(saved+sep+tmp);
 			}
-			
-			Log.d("Help-JustifiViewText", Integer.toString(v.getLineCount()));
 			
 			espaiat[addSpaced]=espaiat[addSpaced].substring(1);
 			
@@ -82,6 +96,8 @@ public class Help extends Activity {
 			for (int i=0; i<espaiat.length;i++){
 				tmp+=espaiat[i]+linia[i+1];
 			}
+			//Log.d("Help-JustifiViewText", tmp);
+			//Log.d("Help-JustifiViewText", Integer.toString(v.getLineCount()));
 			saved+=sep+tmp;
 			sep=' ';
 			
