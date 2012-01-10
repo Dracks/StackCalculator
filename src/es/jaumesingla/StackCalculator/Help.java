@@ -2,6 +2,8 @@ package es.jaumesingla.StackCalculator;
 
 import java.util.Random;
 
+import junit.framework.Assert;
+
 import android.app.Activity;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -33,32 +35,42 @@ public class Help extends Activity {
 		int addSpaced=0;
 		int nLines=1;
 		
-		char sep='\t';
+		String sep="";
+		String tst="";
 		
+		//int maxWidth=(int) (v.getWidth()*0.8);
+		float maxWidth= v.getMeasuredWidth()- v.getCompoundPaddingLeft() - v.getCompoundPaddingRight();
 		
-		/*Rect bounds = new Rect();
+		Rect bounds = new Rect();
 		Paint textPaint = v.getPaint();
 		textPaint.getTextBounds(text,0,text.length(),bounds);
-		int height = bounds.height();
-		int width = bounds.width();*/
+		/*int height = bounds.height();
+		int width = bounds.width();//*/
 		
-		v.setText(saved+sep+tmp);
+		//v.setText(saved+sep+tmp);
 		while (endText<listText.length-1){
-			tmp="";
-			//textPaint.getTextBounds(text, index, count, bounds);
+			tmp=listText[endText++];
 			
-			while (v.getLineCount()==nLines && endText<listText.length){
+			//textPaint.getTextBounds(tst+tmp, 0, tmp.length()+tst.length(), bounds);
+			while (textPaint.measureText(tst+tmp) <maxWidth && endText<listText.length){
 				tmp=tmp+" "+listText[endText];
 				endText++;
-				v.setText(saved+sep+tmp);
+				//textPaint.getTextBounds(tst+tmp, 0, tmp.length()+tst.length(), bounds);
+				//v.setText(saved+sep+tmp);
 			}
 			if (endText<listText.length)
 				endText--;
-			else 
+			else {
+				v.setText(saved+sep+tmp);
 				break;
-			//Log.d("Help-JustifiViewText", tmp);
-			//Log.d("Help-JustifiViewText", Integer.toString(v.getLineCount()));
+			}
+			Log.d("Help-JustifiViewText ", Integer.toString(bounds.width()));
+			//Log.d("Help-JustifiViewText--", Integer.toString(bounds.right-bounds.left));
 			
+			Log.d("Help-JustifiViewText", tmp);
+			Log.d("Help-JustifiViewText", Integer.toString(v.getLineCount()));
+			assert endText>iniText;
+			assert endText<listText.length;
 			linia=new String[endText-iniText];
 			espaiat=new String[endText-iniText-1];
 			for (int i=iniText; i<endText; i++){
@@ -76,10 +88,11 @@ public class Help extends Activity {
 			for (int i=0; i<espaiat.length;i++){
 				tmp+=espaiat[i]+linia[i+1];
 			}
-			v.setText(saved+sep+tmp);
+			//v.setText(saved+sep+tmp);
 			
-			
-			while (v.getLineCount()==nLines){
+			//textPaint.getTextBounds(tst+tmp, 0, tmp.length()+tst.length(), bounds);
+			//Log.d("Debug size:", Integer.toString(bounds.width())+" vs "+Float.toString(maxWidth));
+			while (textPaint.measureText(tst+tmp)<maxWidth){
 				addSpaced= (addSpaced+1) % espaiat.length;
 				espaiat[addSpaced]+=" ";
 				tmp=linia[0];
@@ -87,7 +100,8 @@ public class Help extends Activity {
 					tmp+=espaiat[i]+linia[i+1];
 				}
 				//Log.d("Help-JustifiViewText", "otra mas");
-				v.setText(saved+sep+tmp);
+				//v.setText(saved+sep+tmp);
+				//textPaint.getTextBounds(tst+tmp, 0, tmp.length()+tst.length(), bounds);
 			}
 			
 			espaiat[addSpaced]=espaiat[addSpaced].substring(1);
@@ -96,15 +110,19 @@ public class Help extends Activity {
 			for (int i=0; i<espaiat.length;i++){
 				tmp+=espaiat[i]+linia[i+1];
 			}
+			//textPaint.getTextBounds(tst+tmp, 0, tmp.length()+tst.length(), bounds);
+			Log.d("Debug size:", Float.toString(textPaint.measureText(tst+tmp))+" vs "+Float.toString(maxWidth)+" =>"+tst+tmp);
 			//Log.d("Help-JustifiViewText", tmp);
 			//Log.d("Help-JustifiViewText", Integer.toString(v.getLineCount()));
 			saved+=sep+tmp;
-			sep=' ';
+			sep="\n";
+			tst="";
 			
 			nLines++;
 			
 		}
 		
+		//v.setText(saved);
 		
 	}
 	
