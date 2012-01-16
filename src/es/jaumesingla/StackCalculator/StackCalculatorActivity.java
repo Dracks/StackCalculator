@@ -59,7 +59,7 @@ public class StackCalculatorActivity extends Activity {
 		// Look up the AdView as a resource and load a request.
 		AdView adView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest();
-		adRequest.addTestDevice("953C629AF51EC113C8C153493876C11F");
+		adRequest.addTestDevice("38309AC626B900EC");
 		// adRequest.setTestDevices("953C629AF51EC113C8C153493876C11F");
 		adRequest.setTesting(true);
 		adView.loadAd(adRequest);
