@@ -4,7 +4,7 @@
     android:id="@+id/Contingut"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fons_fosc"
+    android:background="@drawable/fons_1i"
     android:gravity="bottom"
     android:orientation="vertical" >
 
@@ -30,7 +30,7 @@
             android:id="@+id/bSin"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickSin"
             android:text="sin" />
 
@@ -38,7 +38,7 @@
             android:id="@+id/bCos"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickCos"
             android:text="cos" />
 
@@ -46,7 +46,7 @@
             android:id="@+id/bTan"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickTan"
             android:text="tan" />
 
@@ -54,7 +54,7 @@
             android:id="@+id/bShift"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_vermell"
             android:onClick="onClickShift"
             android:text="Shift" />
 
@@ -77,7 +77,7 @@
             android:id="@+id/bEx"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickIntegralEx"
             android:text="e^x" />
 
@@ -85,7 +85,7 @@
             android:id="@+id/bLn"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickLn"
             android:text="ln" />
 
@@ -93,7 +93,7 @@
             android:id="@+id/bLog"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickPi"
             android:text="π" />
 
@@ -124,7 +124,7 @@
             android:id="@+id/button7"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="7" />
 
@@ -132,7 +132,7 @@
             android:id="@+id/button8"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="8" />
 
@@ -140,7 +140,7 @@
             android:id="@+id/button9"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="9" />
 
@@ -165,7 +165,7 @@
             android:id="@+id/button4"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="4" />
 
@@ -173,7 +173,7 @@
             android:id="@+id/button5"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="5" />
 
@@ -181,7 +181,7 @@
             android:id="@+id/button6"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="6" />
 
@@ -189,7 +189,7 @@
             android:id="@+id/bAdd"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickAdd"
             android:text="+" />
 
@@ -197,7 +197,7 @@
             android:id="@+id/bSub"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickSub"
             android:text="-" />
     </LinearLayout>
@@ -212,7 +212,7 @@
             android:id="@+id/button1"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="1" />
 
@@ -220,7 +220,7 @@
             android:id="@+id/button2"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="2" />
 
@@ -228,7 +228,7 @@
             android:id="@+id/button3"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="3" />
 
@@ -236,7 +236,7 @@
             android:id="@+id/bMul"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickMul"
             android:text="*" />
 
@@ -244,7 +244,7 @@
             android:id="@+id/bDiv"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickDiv"
             android:text="/" />
     </LinearLayout>
@@ -260,7 +260,7 @@
             android:layout_width="128sp"
             android:layout_height="49sp"
             android:layout_weight="1"
-            android:background="@drawable/boto_quad_llarg"
+            android:background="@drawable/b_llarg_blau"
             android:onClick="onClickChar"
             android:text="0" />
 
@@ -268,7 +268,7 @@
             android:id="@+id/button2"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_blau"
             android:onClick="onClickChar"
             android:text="." />
 
@@ -276,7 +276,7 @@
             android:id="@+id/bPow"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickPow"
             android:text="x^y" />
 
@@ -284,11 +284,10 @@
             android:id="@+id/bSqrt"
             android:layout_width="64sp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
+            android:background="@drawable/b_lila"
             android:onClick="onClickSqrt"
             android:text="√" />
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/linearLayout7"

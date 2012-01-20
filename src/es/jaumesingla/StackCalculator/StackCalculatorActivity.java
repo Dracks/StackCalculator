@@ -423,7 +423,17 @@ public class StackCalculatorActivity extends Activity {
 	public void onClickDel(View view) {
 		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (writing) {
-			write = write.substring(0, write.length() - 1);
+			if (write.length()>0){
+				write = write.substring(0, write.length() - 1);
+				if (write.length()==0){
+					Button back = (Button) this.findViewById(R.id.bDel);
+					back.setText("Cancel");
+				}
+			} else {
+				Button back = (Button) this.findViewById(R.id.bDel);
+				back.setText("Delete");
+				writing=false;
+			}
 		} else if (!navigation) {
 			if (stack.size() > 0) {
 				stack.removeFirst();
