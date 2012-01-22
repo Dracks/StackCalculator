@@ -7,7 +7,7 @@
 	<supports-screens android:smallScreens="false" />
 	
     <application
-        android:icon="@drawable/ic_launcher_new"
+        android:icon="@drawable/logo_1i"
         android:label="@string/app_name" 
 		android:debuggable="true"
 		>
