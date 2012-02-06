@@ -3,20 +3,27 @@
     android:id="@+id/AboutContents"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/popie_2"
+    android:background="@drawable/popup_1i"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical" >
 		
-	<TextView android:gravity="center" 
+	<!-- <TextView android:gravity="center" 
 		android:layout_height="wrap_content" 
 		android:layout_width="match_parent" 
 		android:text="@string/app_name" 
 		android:textSize="25dp" 
-		android:textColor="#000000"/>
+		android:textColor="#000000"/> -->
+	 <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:src="@drawable/logo_1i_b1" />
 	<TextView android:gravity="center" 
 		android:layout_height="wrap_content" 
 		android:layout_width="match_parent" 
-		android:text="\n\nProgramed by\nJaume Singla Valls\n\nDessign by\nFrancesc Padros\nUnai Cayon\n\n"  android:textColor="#000000"/>
+		android:text="\n\nProgramed by\nJaume Singla Valls\n\nDessign by\nFrancesc Padros\nUnai Cayon\n\n"  
+		android:textColor="#FFFFFF"
+		/>
 	<Button android:background="@drawable/boto_quad_llarg" 
 		android:onClick="onClickClose" 
 		android:layout_height="50dp"

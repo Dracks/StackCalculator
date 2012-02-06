@@ -25,7 +25,7 @@
         <activity android:name="com.google.ads.AdActivity" 
              android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode"
              />
-        <activity android:name="Help" android:label="StackCalculator - Help" android:screenOrientation="portrait"></activity>
+        <activity android:name="Help" android:label="Help" android:screenOrientation="portrait"></activity>
     </application>
     <!-- android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
     android:configChanges="keyboard|keyboardHidden|orientation|screenLayout"

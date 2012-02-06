@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">StackCalculator</string>
+	<string name="app_name">Stack Calculator</string>
 	<string name="tutorial_text_1">	The difference between a normal calculator and a stack Calculator is that, with the normal calculator, you have only a field with a value, and in the stack calculator you have a field stack of values</string>
 	<string name="tutorial_text_2">	When you insert the values and operations in a stack calculator, you need to first insert the values, and when you have the two values if the operation is with two values, you can apply the operation.</string>
 	<string name="tutorial_text_3">	To insert a value, you need to write the value with the number buttons and the period button and press enter. For example, if you wish do the operation 2 plus 5, you first press 2 and enter, and then press 5 and enter; now you can push the addition operation to resolve the operation.</string>
