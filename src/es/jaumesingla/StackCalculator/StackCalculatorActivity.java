@@ -279,7 +279,10 @@ public class StackCalculatorActivity extends Activity {
 			} else {
 				if (writing) {
 					show = this.getText(0, nLines - 1, index - 1);
-					show = show + "\n" + write;
+					if (nLines>1)
+						show = show + "\n" + write;
+					else
+						show=write;
 				} else {
 					show = this.getText(0, nLines, index - 1);
 				}
@@ -287,7 +290,10 @@ public class StackCalculatorActivity extends Activity {
 		} else {
 			if (writing) {
 				show = this.getText(0, nLines - 1, index - 1);
-				show = show + "\n" + write;
+				if (nLines>1)
+					show = show + "\n" + write;
+				else
+					show=write;
 			}
 		}
 		Display.setText(show);
@@ -350,21 +356,29 @@ public class StackCalculatorActivity extends Activity {
 	public void onClickShift(View view) {
 		shifted = !shifted;
 		if (shifted) {
-			((Button) findViewById(R.id.bShift)).setText("Unshift");
-			((Button) findViewById(R.id.bDiv)).setText("1/x");
+			//((Button) findViewById(R.id.bShift)).setText("Unshift");
+			//((Button) findViewById(R.id.bDiv)).setText("1/x");
 			((Button) findViewById(R.id.bSub)).setText("-x");
-			((Button) findViewById(R.id.bSin)).setText("Arcsin");
-			((Button) findViewById(R.id.bCos)).setText("Arccos");
-			((Button) findViewById(R.id.bTan)).setText("Arctan");
+			if (findViewById(R.id.bSin)!=null){
+				((Button) findViewById(R.id.bSin)).setText("Arcsin");
+				((Button) findViewById(R.id.bCos)).setText("Arccos");
+				((Button) findViewById(R.id.bTan)).setText("Arctan");
+			}
 			((Button) findViewById(R.id.bLn)).setText("Log");
+			((Button) findViewById(R.id.bSqrt)).setText("x^2");
+			((Button) findViewById(R.id.bEx)).setText("x^y");
 		} else {
-			((Button) findViewById(R.id.bShift)).setText("Shift");
-			((Button) findViewById(R.id.bDiv)).setText("/");
+			//((Button) findViewById(R.id.bShift)).setText("Shift");
+			//((Button) findViewById(R.id.bDiv)).setText("/");
 			((Button) findViewById(R.id.bSub)).setText("-");
-			((Button) findViewById(R.id.bSin)).setText("Sin");
-			((Button) findViewById(R.id.bCos)).setText("Cos");
-			((Button) findViewById(R.id.bTan)).setText("Tan");
+			if (findViewById(R.id.bSin)!=null){
+				((Button) findViewById(R.id.bSin)).setText("Sin");
+				((Button) findViewById(R.id.bCos)).setText("Cos");
+				((Button) findViewById(R.id.bTan)).setText("Tan");
+			}
 			((Button) findViewById(R.id.bLn)).setText("Ln");
+			((Button) findViewById(R.id.bSqrt)).setText("Ãx");
+			((Button) findViewById(R.id.bEx)).setText("e^y");
 		}
 	}
 
@@ -508,36 +522,18 @@ public class StackCalculatorActivity extends Activity {
 		if (stack.size() >= 2 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			if (shifted) {
-				stack.addFirst(new Double(1 / a));
-			} else {
-				double b = stack.getFirst().doubleValue();
-				stack.removeFirst();
-				stack.addFirst(new Double(b / a));
-			}
-		}
-		this.refreshView();
-	}
-
-	public void onClickPow(View view) {
-		//Log.d("StackCalculatorActivity", "holamon-Button");
-		if (stack.size() >= 2 && !writing && !navigation) {
-			double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(Math.pow(b, a)));
+			stack.addFirst(new Double(b / a));
 		}
 		this.refreshView();
-
 	}
-
-	public void onClickSqrt(View view) {
-		//Log.d("StackCalculatorActivity", "holamon-Button");
+	
+	public void onClickInv(View view){
 		if (stack.size() >= 1 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(Math.sqrt(a)));
+			stack.addFirst(new Double(1 / a));
 		}
 		this.refreshView();
 	}
@@ -581,13 +577,38 @@ public class StackCalculatorActivity extends Activity {
 		}
 		this.refreshView();
 	}
-
-	public void onClickIntegralEx(View view) {
+	
+	public void onClickSqrt(View view) {
+		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (stack.size() >= 1 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			//if (!shifted)
-			stack.addFirst(new Double(Math.pow(Math.E, a)));
+			if (shifted){
+				stack.addFirst(new Double(Math.pow(a,2.0f)));
+			} else {
+				stack.addFirst(new Double(Math.sqrt(a)));
+			}
+		}
+		this.refreshView();
+	}
+
+	public void onClickIntegralEx(View view) {
+		if (shifted){
+			if (stack.size() >= 2 && !writing && !navigation) {
+				double a = stack.getFirst().doubleValue();
+				stack.removeFirst();
+				double b = stack.getFirst().doubleValue();
+				stack.removeFirst();
+				//if (!shifted)
+				stack.addFirst(new Double(Math.pow(b, a)));
+			}
+		} else{ 
+			if (stack.size() >= 1 && !writing && !navigation) {
+				double a = stack.getFirst().doubleValue();
+				stack.removeFirst();
+				//if (!shifted)
+				stack.addFirst(new Double(Math.pow(Math.E, a)));
+			}
 		}
 		this.refreshView();
 	}
@@ -606,7 +627,7 @@ public class StackCalculatorActivity extends Activity {
 	}
 
 	public void onClickPi(View view) {
-		if (stack.size() >= 1 && !writing && !navigation) {
+		if (!writing && !navigation) {
 			stack.addFirst(new Double(Math.PI));
 		}
 		this.refreshView();
