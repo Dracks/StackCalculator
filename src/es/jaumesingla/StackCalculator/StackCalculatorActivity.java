@@ -72,24 +72,38 @@ public class StackCalculatorActivity extends Activity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 
-
-		//Calcul de tamany de la pantalla
-		View contentView = this.findViewById(R.id.Contingut);
-		int alcadaTotal = contentView.getHeight();
-		//Log.i("stackCalculatorActivity", "Pre Al�ada total de:" + Integer.toString(alcadaTotal));
-		alcadaTotal -= this.findViewById(R.id.linearLayout1).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout2).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout3).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout4).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout5).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout6).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout7).getHeight();
-		//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
-		EditText Display = (EditText) this.findViewById(R.id.Display);
-		Display.getLayoutParams().height = alcadaTotal;
-		nLines = alcadaTotal / Display.getLineHeight() - 1;
-		//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
-
+		if (this.findViewById(R.id.lVertical)!=null){
+			//Calcul de tamany de la pantalla
+			View contentView = this.findViewById(R.id.Contingut);
+			int alcadaTotal = contentView.getHeight();
+			
+			alcadaTotal -= this.findViewById(R.id.linearLayout7).getHeight();
+			
+			int ampladaTotal = contentView.getWidth();
+			//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
+			EditText Display = (EditText) this.findViewById(R.id.Display);
+			Display.getLayoutParams().height = alcadaTotal;
+			Display.getLayoutParams().width = ampladaTotal/2;
+			nLines = alcadaTotal / Display.getLineHeight() - 1;
+			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
+		} else {
+			//Calcul de tamany de la pantalla
+			View contentView = this.findViewById(R.id.Contingut);
+			int alcadaTotal = contentView.getHeight();
+			//Log.i("stackCalculatorActivity", "Pre Al�ada total de:" + Integer.toString(alcadaTotal));
+			alcadaTotal -= this.findViewById(R.id.linearLayout1).getHeight();
+			alcadaTotal -= this.findViewById(R.id.linearLayout2).getHeight();
+			alcadaTotal -= this.findViewById(R.id.linearLayout3).getHeight();
+			alcadaTotal -= this.findViewById(R.id.linearLayout4).getHeight();
+			alcadaTotal -= this.findViewById(R.id.linearLayout5).getHeight();
+			alcadaTotal -= this.findViewById(R.id.linearLayout6).getHeight();
+			alcadaTotal -= this.findViewById(R.id.linearLayout7).getHeight();
+			//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
+			EditText Display = (EditText) this.findViewById(R.id.Display);
+			Display.getLayoutParams().height = alcadaTotal;
+			nLines = alcadaTotal / Display.getLineHeight() - 1;
+			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
+		}
 		this.refreshView();
 		//updateSizeInfo();
 	}
