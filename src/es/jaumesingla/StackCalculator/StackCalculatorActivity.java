@@ -40,6 +40,8 @@ public class StackCalculatorActivity extends Activity {
 	private int nLines;
 	private ConversorInterface conv;
 	private PopupWindow pw;
+	
+	private boolean horizontal;
 
 	public StackCalculatorActivity() {
 		stack = new LinkedList<Double>();
@@ -73,6 +75,7 @@ public class StackCalculatorActivity extends Activity {
 		super.onWindowFocusChanged(hasFocus);
 
 		if (this.findViewById(R.id.lVertical)!=null){
+			horizontal=true;
 			//Calcul de tamany de la pantalla
 			View contentView = this.findViewById(R.id.Contingut);
 			int alcadaTotal = contentView.getHeight();
@@ -87,6 +90,7 @@ public class StackCalculatorActivity extends Activity {
 			nLines = alcadaTotal / Display.getLineHeight() - 1;
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
 		} else {
+			horizontal=false;
 			//Calcul de tamany de la pantalla
 			View contentView = this.findViewById(R.id.Contingut);
 			int alcadaTotal = contentView.getHeight();
@@ -158,8 +162,10 @@ public class StackCalculatorActivity extends Activity {
         View contentView = this.findViewById(R.id.Contingut);
 		int alcadaTotal = contentView.getHeight();
 		int ampladaTotal= contentView.getWidth();
-		
-        pw = new PopupWindow(layout, contentView.getWidth()-(int)( ampladaTotal*margin), contentView.getHeight()-(int)(alcadaTotal*margin), true);
+		if (horizontal){
+			ampladaTotal=(2*alcadaTotal)/3;
+		}
+        pw = new PopupWindow(layout, ampladaTotal-(int)( ampladaTotal*margin), alcadaTotal-(int)(alcadaTotal*margin), true);
         
         //pw.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         // display the popup in the center
