@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -47,11 +48,18 @@ public class StackCalculatorActivity extends Activity {
 	private PopupWindow pw;
 	
 	private boolean horizontal;
+	private boolean dadesImportades;
+	
+	private static final String dataName="StackCalculatorData"; 
+	private static final float dataVersion=1.0f;
+	
+	
 
 	public StackCalculatorActivity() {
 		stack = new LinkedList<Double>();
 		index = 0;
 		write = "";
+		dadesImportades=false;
 	}
 
 	/** Called when the activity is first created. */
@@ -64,52 +72,111 @@ public class StackCalculatorActivity extends Activity {
 		DisplayMetrics metrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		
-		/*switch (getWindowManager().getDefaultDisplay().getOrientation()){
-		case Surface.ROTATION_0:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		break;
-		case Surface.ROTATION_180:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-			//Log.d("Screen-Horientation", "Horizontal");
-		break;
-		case Surface.ROTATION_90:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		break;	
-		case Surface.ROTATION_270:
-			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-			//Log.d("Screen-Horientation", "PORTRAIT?");
-		break;
-		}*/
-		/*switch (getResources().getConfiguration().orientation){
-        case Configuration.ORIENTATION_PORTRAIT:
-        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        break;
-       // case Surface.ROTATION_180:
-       // 	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        	//Log.d("Screen-Horientation", "Horizontal");
-        //break;
-        case Configuration.ORIENTATION_LANDSCAPE:
-        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        break;	
-        //case Surface.ROTATION_270:
-        //	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        	//Log.d("Screen-Horientation", "PORTRAIT?");
-        //break;
-        }*/
-		
 		//Publicitat
 		// Look up the AdView as a resource and load a request.
 		AdView adView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest();
-		//adRequest.addTestDevice("38309AC626B900EC");
-		// adRequest.setTestDevices("953C629AF51EC113C8C153493876C11F");
-		adRequest.setTesting(true);
+		// adRequest.addTestDevice("5E63C202A7136485DEFA87461EB95C26");
+		
+		//adRequest.setTesting(true);
 		adView.loadAd(adRequest);
 		
 		
 		
 		this.conv = new RadiantConversor();
 		//nLines=5;
+		
+		try {
+			if (!dadesImportades){
+				dadesImportades=true;
+				SharedPreferences settings = getSharedPreferences(dataName, 0);
+				if (settings.getFloat("version",dataVersion)==dataVersion){
+					int nData=settings.getInt("StackSize", 0);
+					
+					for (int i=0; i<nData; i++){
+						stack.addLast(new Double(settings.getFloat("Row " + Integer.toString(i), 0.0f)));
+					}
+					switch (settings.getInt("AngleConversor", 0)) {
+						case 0:
+							this.conv = new RadiantConversor();
+							break;
+						case 1:
+							this.conv = new DegreeConversor();
+							break;
+						default:
+							this.conv = new RadiantConversor();
+					}
+				}
+			}
+		} catch (Exception e){
+			
+		}
+		
+	}
+	
+	@Override
+	public void onStop(){
+		super.onStop();
+		SharedPreferences.Editor settings = getSharedPreferences(dataName, 0).edit();
+		settings.putFloat("version", dataVersion);
+		settings.putInt("AngleConversor", this.conv.getID());
+		settings.putInt("StackSize", this.stack.size());
+		for (int i = 0; i < stack.size(); i++) {
+			settings.putFloat("Row " + Integer.toString(i), (float) stack.get(i).doubleValue());
+		}
+		settings.commit();
+		/*if (settings.getFloat("version",dataVersion)==dataVersion){
+			int nData=settings.getInt("StackSize", 0);
+			for (int i=0; i<nData; i++){
+				stack.addLast(new Double(settings.getFloat("Row " + Integer.toString(i), 0.0f)));
+			}
+			switch (settings.getInt("AngleConversor", 0)) {
+				case 0:
+					this.conv = new RadiantConversor();
+					break;
+				case 1:
+					this.conv = new DegreeConversor();
+					break;
+				default:
+					this.conv = new RadiantConversor();
+			}
+		}*/
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState) {
+		// Save UI state changes to the savedInstanceState.
+		// This bundle will be passed to onCreate if the process is
+		// killed and restarted.
+		savedInstanceState.putInt("StackSize", this.stack.size());
+		for (int i = 0; i < stack.size(); i++) {
+			savedInstanceState.putDouble("Row " + Integer.toString(i), stack.get(i).doubleValue());
+		}
+		savedInstanceState.putInt("AngleConversor", this.conv.getID());
+		// etc.
+		super.onSaveInstanceState(savedInstanceState);
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		// Restore UI state from the savedInstanceState.
+		// This bundle has also been passed to onCreate.
+		int Size = savedInstanceState.getInt("StackSize");
+		stack = new LinkedList<Double>();
+		for (int i = 0; i < Size; i++) {
+			stack.addLast(new Double(savedInstanceState.getDouble("Row " + Integer.toString(i))));
+		}
+		switch (savedInstanceState.getInt("AngleConversor")) {
+			case 0:
+				this.conv = new RadiantConversor();
+				break;
+			case 1:
+				this.conv = new DegreeConversor();
+				break;
+			default:
+				this.conv = new RadiantConversor();
+		}
 	}
 
 	@Override
@@ -168,10 +235,10 @@ public class StackCalculatorActivity extends Activity {
 			
 			//Calcul de tamany de la pantalla
 			View contentView = this.findViewById(R.id.Contingut);
-			int alcadaTotal = contentView.getHeight();
 			
 			int ampladaOcupada=this.findViewById(R.id.linearLayout1).getWidth();
 			int ampladaTotal=contentView.getWidth();
+			Log.d("Debug1", " D->"+Integer.toString(ampladaOcupada)+" vs "+Integer.toString(ampladaTotal));
 			float prop=(float)ampladaTotal/(float)ampladaOcupada;;
 			
 			LinearLayout obj=(LinearLayout) contentView;
@@ -185,13 +252,15 @@ public class StackCalculatorActivity extends Activity {
 				}
 			}
 			
+			int alcadaTotal = contentView.getHeight();
+			
 			//Log.i("stackCalculatorActivity", "Pre Al�ada total de:" + Integer.toString(alcadaTotal));
-			alcadaTotal -= this.findViewById(R.id.linearLayout1).getHeight();
-			alcadaTotal -= this.findViewById(R.id.linearLayout2).getHeight();
-			alcadaTotal -= this.findViewById(R.id.linearLayout3).getHeight();
-			alcadaTotal -= this.findViewById(R.id.linearLayout4).getHeight();
-			alcadaTotal -= this.findViewById(R.id.linearLayout5).getHeight();
-			alcadaTotal -= this.findViewById(R.id.linearLayout6).getHeight();
+			alcadaTotal -= this.findViewById(R.id.linearLayout1).getHeight()*prop;
+			alcadaTotal -= this.findViewById(R.id.linearLayout2).getHeight()*prop;
+			alcadaTotal -= this.findViewById(R.id.linearLayout3).getHeight()*prop;
+			alcadaTotal -= this.findViewById(R.id.linearLayout4).getHeight()*prop;
+			alcadaTotal -= this.findViewById(R.id.linearLayout5).getHeight()*prop;
+			alcadaTotal -= this.findViewById(R.id.linearLayout6).getHeight()*prop;
 			alcadaTotal -= this.findViewById(R.id.linearLayout7).getHeight();
 			//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
 			EditText Display = (EditText) this.findViewById(R.id.Display);
@@ -202,41 +271,6 @@ public class StackCalculatorActivity extends Activity {
 		}
 		//this.refreshView();
 		//updateSizeInfo();
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle savedInstanceState) {
-		// Save UI state changes to the savedInstanceState.
-		// This bundle will be passed to onCreate if the process is
-		// killed and restarted.
-		savedInstanceState.putInt("StackSize", this.stack.size());
-		for (int i = 0; i < stack.size(); i++) {
-			savedInstanceState.putDouble("Row " + Integer.toString(i), stack.get(i).doubleValue());
-		}
-		savedInstanceState.putInt("AngleConversor", this.conv.getID());
-		// etc.
-		super.onSaveInstanceState(savedInstanceState);
-	}
-
-	@Override
-	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		super.onRestoreInstanceState(savedInstanceState);
-		// Restore UI state from the savedInstanceState.
-		// This bundle has also been passed to onCreate.
-		int Size = savedInstanceState.getInt("StackSize");
-		for (int i = 0; i < Size; i++) {
-			stack.addLast(new Double(savedInstanceState.getDouble("Row " + Integer.toString(i))));
-		}
-		switch (savedInstanceState.getInt("AngleConversor")) {
-			case 0:
-				this.conv = new RadiantConversor();
-				break;
-			case 1:
-				this.conv = new DegreeConversor();
-				break;
-			default:
-				this.conv = new RadiantConversor();
-		}
 	}
 	
 	private void initiatePopupWindow(int layer, int layout_id, float margin) {
