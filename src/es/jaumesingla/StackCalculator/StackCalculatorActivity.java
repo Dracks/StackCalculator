@@ -5,7 +5,10 @@ import java.util.LinkedList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -13,12 +16,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.View;
 //import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 
 import android.widget.PopupWindow;
@@ -56,16 +61,53 @@ public class StackCalculatorActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layouts);
 		//this.refreshView();
-
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		
+		/*switch (getWindowManager().getDefaultDisplay().getOrientation()){
+		case Surface.ROTATION_0:
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		break;
+		case Surface.ROTATION_180:
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			//Log.d("Screen-Horientation", "Horizontal");
+		break;
+		case Surface.ROTATION_90:
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		break;	
+		case Surface.ROTATION_270:
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			//Log.d("Screen-Horientation", "PORTRAIT?");
+		break;
+		}*/
+		/*switch (getResources().getConfiguration().orientation){
+        case Configuration.ORIENTATION_PORTRAIT:
+        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        break;
+       // case Surface.ROTATION_180:
+       // 	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        	//Log.d("Screen-Horientation", "Horizontal");
+        //break;
+        case Configuration.ORIENTATION_LANDSCAPE:
+        	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        break;	
+        //case Surface.ROTATION_270:
+        //	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        	//Log.d("Screen-Horientation", "PORTRAIT?");
+        //break;
+        }*/
+		
 		//Publicitat
 		// Look up the AdView as a resource and load a request.
 		AdView adView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest();
-		adRequest.addTestDevice("38309AC626B900EC");
+		//adRequest.addTestDevice("38309AC626B900EC");
 		// adRequest.setTestDevices("953C629AF51EC113C8C153493876C11F");
 		adRequest.setTesting(true);
 		adView.loadAd(adRequest);
-
+		
+		
+		
 		this.conv = new RadiantConversor();
 		//nLines=5;
 	}
@@ -74,7 +116,7 @@ public class StackCalculatorActivity extends Activity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 
-		if (this.findViewById(R.id.lVertical)!=null){
+		if (this.findViewById(R.id.lHorizontal)!=null){
 			horizontal=true;
 			//Calcul de tamany de la pantalla
 			View contentView = this.findViewById(R.id.Contingut);
@@ -82,18 +124,67 @@ public class StackCalculatorActivity extends Activity {
 			
 			alcadaTotal -= this.findViewById(R.id.linearLayout7).getHeight();
 			
-			int ampladaTotal = contentView.getWidth();
+			int ampladaTotal = contentView.getWidth()/2;
 			//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
 			EditText Display = (EditText) this.findViewById(R.id.Display);
 			Display.getLayoutParams().height = alcadaTotal;
-			Display.getLayoutParams().width = ampladaTotal/2;
+			Display.getLayoutParams().width = ampladaTotal;
 			nLines = alcadaTotal / Display.getLineHeight() - 1;
+			this.refreshView();
+			
+			int ampladaOcupada=this.findViewById(R.id.lVertical_buttons).getWidth();
+			//int alcadaDisponible=this.findViewById(R.id.lVertical_buttons).getHeight();
+			
+			alcadaTotal = contentView.getHeight();
+			int alcadaOcupada=0;
+			alcadaOcupada += this.findViewById(R.id.linearLayout1).getHeight();
+			alcadaOcupada += this.findViewById(R.id.linearLayout2).getHeight();
+			alcadaOcupada += this.findViewById(R.id.linearLayout3).getHeight();
+			alcadaOcupada += this.findViewById(R.id.linearLayout4).getHeight();
+			alcadaOcupada += this.findViewById(R.id.linearLayout5).getHeight();
+			alcadaOcupada += this.findViewById(R.id.linearLayout6).getHeight();
+			//alcadaOcupada += this.findViewById(R.id.linearLayout7).getHeight();
+			
+			float propX=(float)ampladaTotal/(float)ampladaOcupada;
+			float propY=(float)alcadaTotal/(float)alcadaOcupada;
+			
+			float prop=propX<propY?propX:propY;
+			
+			LinearLayout obj=(LinearLayout) this.findViewById(R.id.lVertical_buttons);
+			
+			for (int i=0; i<obj.getChildCount(); i++){
+				LinearLayout aux=(LinearLayout) obj.getChildAt(i); //Get  LinearLayoutHorizontal [1..6]
+				for (int j=0; j<aux.getChildCount(); j++){
+					View aux2=aux.getChildAt(j);
+					aux2.getLayoutParams().width*=prop;
+					aux2.getLayoutParams().height*=prop;
+				}
+			}
+			
+
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
 		} else {
 			horizontal=false;
+			
 			//Calcul de tamany de la pantalla
 			View contentView = this.findViewById(R.id.Contingut);
 			int alcadaTotal = contentView.getHeight();
+			
+			int ampladaOcupada=this.findViewById(R.id.linearLayout1).getWidth();
+			int ampladaTotal=contentView.getWidth();
+			float prop=(float)ampladaTotal/(float)ampladaOcupada;;
+			
+			LinearLayout obj=(LinearLayout) contentView;
+			
+			for (int i=1; i<obj.getChildCount()-1; i++){
+				LinearLayout aux=(LinearLayout) obj.getChildAt(i); //Get  LinearLayoutHorizontal [1..6]
+				for (int j=0; j<aux.getChildCount(); j++){
+					View aux2=aux.getChildAt(j);
+					aux2.getLayoutParams().width*=prop;
+					aux2.getLayoutParams().height*=prop;
+				}
+			}
+			
 			//Log.i("stackCalculatorActivity", "Pre Al�ada total de:" + Integer.toString(alcadaTotal));
 			alcadaTotal -= this.findViewById(R.id.linearLayout1).getHeight();
 			alcadaTotal -= this.findViewById(R.id.linearLayout2).getHeight();
@@ -107,8 +198,9 @@ public class StackCalculatorActivity extends Activity {
 			Display.getLayoutParams().height = alcadaTotal;
 			nLines = alcadaTotal / Display.getLineHeight() - 1;
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
+			this.refreshView();
 		}
-		this.refreshView();
+		//this.refreshView();
 		//updateSizeInfo();
 	}
 
@@ -364,6 +456,8 @@ public class StackCalculatorActivity extends Activity {
 		} else if (keyCode==KeyEvent.KEYCODE_BACK){
 			if (pw!=null)
 				pw.dismiss();
+			else 
+				return super.onKeyDown(keyCode, e);
 		}
 		return false;
 	}
