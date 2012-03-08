@@ -1,0 +1,31 @@
+Archive-Manifest-Version: 1.2
+Archive-Created-By: BlackBerry BAR Packager v1.4
+
+Package-Author: Jaume Singla Valls
+Package-Name: es.jaumesingla.StackCalculator
+Package-Version: 1.0.1.0
+Package-Type: application
+Package-Architecture: armle-v7
+Package-Author-Certificate-Hash: 44qOxR5WFIDGlXh8-gzqeTvkbaXYsRiZS2dV56BH2_G0WP8M5Z70hMYNfIJEyInL44sk3tdo6H5q3-9mvaxkxQ
+Package-Author-Id: gYAAgOequtQOIzFr9-79zOUjvTI
+Package-Id: gYABgLA4FRQtMo0BbyV_Rr7t618
+Package-Version-Id: gYACgPzJSyFOM77Nvrb0xaP74WA
+Package-Issue-Date: 2012-02-13T11:30:47Z
+
+Application-Name: Stack Calculator
+Application-Version: 1.0.1.0
+Application-Id: gYADgKYc28dEnBevZFnzJEgsaKU
+Application-Version-Id: gYAEgLQ2uIOHSUv45p2A8Eeb4T8
+
+Entry-Point-Name: Stack Calculator
+Entry-Point-Icon: android/res/drawable-hdpi/logo_1i.png
+Entry-Point-Type: Qnx/Android
+Entry-Point: android://es.jaumesingla.StackCalculator?activity-name=es.jaumesingla.StackCalculator.StackCalculatorActivity
+Entry-Point-User-Actions: access_shared,play_audio,post_notification,access_internet
+
+Archive-Asset-Name: android/res/drawable-hdpi/logo_1i.png
+Archive-Asset-SHA-512-Digest: GDc3k7g8hElagrq3nwd1s3QR4cLsMuVa2YGKXqXVvN9uYI-yXz3gOdZ3RkcOGdb72wHCOPTn-QCJUW3NNTo6bg
+
+Archive-Asset-Name: android/StackCalculator.apk
+Archive-Asset-SHA-512-Digest: Mp4tvfjMEXEEM9Av8JVr-IF_KQF-PZz6JoKHsrjxKCzZ4Uu_QUcNIDkpNO8XkZs9jSTBDow2WFsF3_BLPTrTtA
+
