@@ -125,22 +125,6 @@ public class StackCalculatorActivity extends Activity {
 			settings.putFloat("Row " + Integer.toString(i), (float) stack.get(i).doubleValue());
 		}
 		settings.commit();
-		/*if (settings.getFloat("version",dataVersion)==dataVersion){
-			int nData=settings.getInt("StackSize", 0);
-			for (int i=0; i<nData; i++){
-				stack.addLast(new Double(settings.getFloat("Row " + Integer.toString(i), 0.0f)));
-			}
-			switch (settings.getInt("AngleConversor", 0)) {
-				case 0:
-					this.conv = new RadiantConversor();
-					break;
-				case 1:
-					this.conv = new DegreeConversor();
-					break;
-				default:
-					this.conv = new RadiantConversor();
-			}
-		}*/
 	}
 	
 	@Override
