@@ -8,7 +8,7 @@
     android:gravity="bottom"
     android:orientation="vertical" >
 
-    <EditText
+    <!--  <EditText
         android:id="@+id/Display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,16 @@
         android:typeface="monospace" >
 
         <requestFocus />
-    </EditText>
+    </EditText>  -->
+    
+    <ListView
+        android:gravity="bottom"
+		android:id="@+id/DisplayList"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="10" 
+            >
+        </ListView>
 
     <LinearLayout
         android:id="@+id/linearLayout1"
