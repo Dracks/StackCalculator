@@ -1,6 +1,5 @@
 package es.jaumesingla.StackCalculator;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.Activity;
@@ -9,8 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -20,11 +17,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.Surface;
 import android.view.View;
 //import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.*;
 import com.google.ads.*;
 
@@ -37,13 +32,11 @@ import es.jaumesingla.StackCalculator.AngleConversor.RadiantConversor;
 public class StackCalculatorActivity extends Activity{
 
 	private LinkedList<Double> stack;
-	private int index;
 	//private double				write;
 	private String write;
 	private boolean writing;
 	private boolean navigation;
 	private boolean shifted;
-	private int nLines;
 	private ConversorInterface conv;
 	private PopupWindow pw;
 	
@@ -60,7 +53,6 @@ public class StackCalculatorActivity extends Activity{
 	public StackCalculatorActivity() {
 		super();
 		stack = new LinkedList<Double>();
-		index = 0;
 		write = "";
 		dadesImportades=false;
 	}
@@ -98,7 +90,7 @@ public class StackCalculatorActivity extends Activity{
 					int nData=settings.getInt("StackSize", 0);
 					
 					for (int i=0; i<nData; i++){
-						Double d=new Double(settings.getFloat("Row " + Integer.toString(i), 0.0f));
+						Double d=Double.valueOf(settings.getFloat("Row " + Integer.toString(i), 0.0f));
 						stack.addLast(d);
 						showedData.addItem(d.toString());
 					}
@@ -156,7 +148,7 @@ public class StackCalculatorActivity extends Activity{
 		stack = new LinkedList<Double>();
 		
 		for (int i = 0; i < Size; i++) {
-			Double d=new Double(savedInstanceState.getDouble("Row " + Integer.toString(i)));
+			Double d=Double.valueOf(savedInstanceState.getDouble("Row " + Integer.toString(i)));
 			stack.addLast(d);
 			showedData.addItem(d.toString());
 		}
@@ -175,6 +167,28 @@ public class StackCalculatorActivity extends Activity{
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
+		
+		AdapterView.OnItemClickListener clickListener=new AdapterView.OnItemClickListener() 
+		{
+			public void onItemClick(AdapterView<?> adapterView, View view,int arg2, long arg3)
+			{
+				/*int selectedPosition = adapterView.getSelectedItemPosition();
+				ShowAlert(String.valueOf(selectedPosition));*/
+				Double d=stack.get(arg2);
+				stack.addFirst(d);
+				showedData.addFirstItem(d.toString());
+			}
+		};
+		
+		AdapterView.OnLongClickListener longClickListener=new AdapterView.OnLongClickListener() 
+		{
+			
+			public boolean onLongClick(View arg0) {
+				
+				ShowAlert(String.valueOf(arg0));
+				return true;
+			}
+		};
 
 		if (this.findViewById(R.id.lHorizontal)!=null){
 			horizontal=true;
@@ -224,33 +238,9 @@ public class StackCalculatorActivity extends Activity{
 					aux2.getLayoutParams().height*=prop;
 				}
 			}
-			Display.setOnItemClickListener
-				(
-				new AdapterView.OnItemClickListener() 
-				{
-					public void onItemClick(AdapterView adapterView, View view,int arg2, long arg3)
-					{
-						/*int selectedPosition = adapterView.getSelectedItemPosition();
-						ShowAlert(String.valueOf(selectedPosition));*/
-						Double d=stack.get(arg2);
-						stack.addFirst(d);
-						showedData.addFirstItem(d.toString());
-					}
-				}
-				);
+			Display.setOnItemClickListener( clickListener );
 			
-			Display.setOnLongClickListener
-				(
-				new AdapterView.OnLongClickListener() 
-				{
-					
-					public boolean onLongClick(View arg0) {
-						
-						ShowAlert(String.valueOf(arg0));
-						return true;
-					}
-				}
-				);
+			Display.setOnLongClickListener(longClickListener);
 			
 
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
@@ -292,33 +282,9 @@ public class StackCalculatorActivity extends Activity{
 			Display.getLayoutParams().height = alcadaTotal;
 			Display.setAdapter(showedData);
 			
-			Display.setOnItemClickListener
-				(
-				new AdapterView.OnItemClickListener() 
-				{
-					public void onItemClick(AdapterView adapterView, View view,int arg2, long arg3)
-					{
-						/*int selectedPosition = adapterView.getSelectedItemPosition();
-						ShowAlert(String.valueOf(selectedPosition));*/
-						Double d=stack.get(arg2);
-						stack.addFirst(d);
-						showedData.addFirstItem(d.toString());
-					}
-				}
-				);
+			Display.setOnItemClickListener( clickListener );
 			
-			Display.setOnLongClickListener
-				(
-				new AdapterView.OnLongClickListener() 
-				{
-					
-					public boolean onLongClick(View arg0) {
-						
-						ShowAlert(String.valueOf(arg0));
-						return true;
-					}
-				}
-				);
+			Display.setOnLongClickListener(longClickListener);
 			//nLines = alcadaTotal / Display.getLineHeight() - 1;
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
 			//this.refreshView();
@@ -468,20 +434,14 @@ public class StackCalculatorActivity extends Activity{
 		} else if (keyCode == KeyEvent.KEYCODE_ENTER) {
 			if (writing) {
 				if (!write.equals("")) {
-					stack.addFirst(new Double(write));
+					stack.addFirst(Double.valueOf(write));
 					showedData.pushNewValue();
 				}
 				write = "";
 				showedData.setNewValue(null);
-			} /*else {
-				if (stack.size() > 0) {
-					stack.addFirst(stack.get(index));
-					index = 0;
-				}
-			}*/
+			}
 			writing = false;
 			navigation = false;
-			//this.refreshView();
 			return true;
 		} else if (keyCode==KeyEvent.KEYCODE_BACK){
 			if (pw!=null)
@@ -559,7 +519,7 @@ public class StackCalculatorActivity extends Activity{
 	public void onClickEnter(View view) {
 		if (writing) {
 			if (!write.equals("")) {
-				stack.addFirst(new Double(write));
+				stack.addFirst(Double.valueOf(write));
 				showedData.pushNewValue();
 			}
 			write = "";
@@ -602,7 +562,6 @@ public class StackCalculatorActivity extends Activity{
 			}
 		} else if (navigation) {
 			navigation = false;
-			index = 0;
 			Button back = (Button) this.findViewById(R.id.bDel);
 			back.setText("Delete");
 		}
@@ -626,7 +585,7 @@ public class StackCalculatorActivity extends Activity{
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			showedData.removeItem(0);
-			Double d=new Double(a + b);
+			Double d=Double.valueOf(a + b);
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
 		}
@@ -640,7 +599,7 @@ public class StackCalculatorActivity extends Activity{
 			stack.removeFirst();
 			showedData.removeItem(0);
 			
-			Double d=new Double(-a);
+			Double d=Double.valueOf(-a);
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
 		} else if (stack.size() >= 2 && !writing && !navigation) {
@@ -650,7 +609,7 @@ public class StackCalculatorActivity extends Activity{
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			showedData.removeItem(0);
-			Double d=new Double(b - a);
+			Double d=Double.valueOf(b - a);
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
 		} else if (writing) {
@@ -674,7 +633,7 @@ public class StackCalculatorActivity extends Activity{
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			showedData.removeItem(0);
-			Double d=new Double(a * b);
+			Double d=Double.valueOf(a * b);
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
 		}
@@ -690,7 +649,7 @@ public class StackCalculatorActivity extends Activity{
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			showedData.removeItem(0);
-			Double d=new Double(b / a);
+			Double d=Double.valueOf(b / a);
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
 		}
@@ -702,7 +661,7 @@ public class StackCalculatorActivity extends Activity{
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			showedData.removeItem(0);
-			Double d=new Double(1 / a);
+			Double d=Double.valueOf(1 / a);
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
 		}
@@ -716,9 +675,9 @@ public class StackCalculatorActivity extends Activity{
 			Double d;
 			showedData.removeItem(0);
 			if (!shifted) {
-				d=new Double(Math.sin(conv.toProcess(a)));
+				d=Double.valueOf(Math.sin(conv.toProcess(a)));
 			} else {
-				d=new Double(conv.toShow(Math.asin(a)));
+				d=Double.valueOf(conv.toShow(Math.asin(a)));
 			}
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
@@ -734,9 +693,9 @@ public class StackCalculatorActivity extends Activity{
 			showedData.removeItem(0);
 			Double d;
 			if (!shifted) {
-				d=new Double(Math.cos(conv.toProcess(a)));
+				d=Double.valueOf(Math.cos(conv.toProcess(a)));
 			} else {
-				d=new Double(conv.toShow(Math.acos(a)));
+				d=Double.valueOf(conv.toShow(Math.acos(a)));
 			}
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
@@ -751,9 +710,9 @@ public class StackCalculatorActivity extends Activity{
 			showedData.removeItem(0);
 			Double d;
 			if (!shifted) {
-				d=new Double(Math.tan(conv.toProcess(a)));
+				d=Double.valueOf(Math.tan(conv.toProcess(a)));
 			} else {
-				d=new Double(conv.toShow(Math.atan(a)));
+				d=Double.valueOf(conv.toShow(Math.atan(a)));
 			}
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
@@ -769,9 +728,9 @@ public class StackCalculatorActivity extends Activity{
 			showedData.removeItem(0);
 			Double d;
 			if (shifted){
-				d=new Double(Math.pow(a,2.0f));
+				d=Double.valueOf(Math.pow(a,2.0f));
 			} else {
-				d=new Double(Math.sqrt(a));
+				d=Double.valueOf(Math.sqrt(a));
 			}
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
@@ -789,7 +748,7 @@ public class StackCalculatorActivity extends Activity{
 				stack.removeFirst();
 				showedData.removeItem(0);
 				//if (!shifted)
-				Double d=new Double(Math.pow(b, a));
+				Double d=Double.valueOf(Math.pow(b, a));
 				stack.addFirst(d);
 				showedData.addFirstItem(d.toString());
 			}
@@ -799,7 +758,7 @@ public class StackCalculatorActivity extends Activity{
 				stack.removeFirst();
 				showedData.removeItem(0);
 				//if (!shifted)
-				Double d=new Double(Math.pow(Math.E, a));
+				Double d=Double.valueOf(Math.pow(Math.E, a));
 				stack.addFirst(d);
 				showedData.addFirstItem(d.toString());
 			}
@@ -814,9 +773,9 @@ public class StackCalculatorActivity extends Activity{
 			showedData.removeItem(0);
 			Double d;
 			if (shifted) {
-				d=new Double(Math.log10(a));
+				d=Double.valueOf(Math.log10(a));
 			} else {
-				d=new Double(Math.log(a));
+				d=Double.valueOf(Math.log(a));
 			}
 			
 			stack.addFirst(d);
@@ -827,7 +786,7 @@ public class StackCalculatorActivity extends Activity{
 
 	public void onClickPi(View view) {
 		if (!writing && !navigation) {
-			Double d=new Double(Math.PI);
+			Double d=Double.valueOf(Math.PI);
 			stack.addFirst(d);
 			showedData.addFirstItem(d.toString());
 		}
@@ -839,7 +798,7 @@ public class StackCalculatorActivity extends Activity{
 
 	}
 	
-	public void onClickElement(AdapterView adapterView, View view, int position, long id){
+	/*public void onClickElement(AdapterView adapterView, View view, int position, long id){
 		
 		int selectedPosition = adapterView.getSelectedItemPosition();
           ShowAlert(String.valueOf(selectedPosition));

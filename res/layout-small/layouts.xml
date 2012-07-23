@@ -66,12 +66,13 @@
             android:text="Fn" />
 
         <Button
-            android:id="@+id/bUp"
+            android:id="@+id/bDel"
             android:layout_width="64sp"
             android:layout_height="49sp"
             android:background="@drawable/boto_quad"
-            android:onClick="onClickUp"
-            android:text="Up" />
+            android:onClick="onClickDel"
+            android:text="Delete" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -105,20 +106,14 @@
             android:text="√x" />
 
         <Button
-            android:id="@+id/bDel"
-            android:layout_width="64sp"
+            android:id="@+id/Enter"
+            android:layout_width="0dp"
             android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
-            android:onClick="onClickDel"
-            android:text="Delete" />
+            android:layout_weight="1"
+            android:background="@drawable/boto_quad_llarg"
+            android:onClick="onClickEnter"
+            android:text="Enter" />
 
-        <Button
-            android:id="@+id/bDown"
-            android:layout_width="64sp"
-            android:layout_height="49sp"
-            android:background="@drawable/boto_quad"
-            android:onClick="onClickDown"
-            android:text="Down" />
     </LinearLayout>
 
     <LinearLayout
@@ -151,15 +146,6 @@
             android:onClick="onClickChar"
             android:text="9" />
 
-        <Button
-            android:id="@+id/Enter"
-            android:layout_width="0dp"
-            android:layout_height="49sp"
-            android:layout_gravity="fill_horizontal"
-            android:layout_weight="1"
-            android:background="@drawable/boto_quad_llarg"
-            android:onClick="onClickEnter"
-            android:text="Enter" />
     </LinearLayout>
 
     <LinearLayout

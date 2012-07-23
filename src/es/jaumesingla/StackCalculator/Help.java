@@ -2,8 +2,6 @@ package es.jaumesingla.StackCalculator;
 
 import java.util.Random;
 
-import junit.framework.Assert;
-
 import android.app.Activity;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -33,7 +31,7 @@ public class Help extends Activity {
 		int iniText=0;
 		int endText=0;
 		int addSpaced=0;
-		int nLines=1;
+		//int nLines=1;
 		
 		String sep="";
 		String tst="";
@@ -118,7 +116,7 @@ public class Help extends Activity {
 			sep="\n";
 			tst="";
 			
-			nLines++;
+			//nLines++;
 			
 		}
 		
@@ -131,8 +129,8 @@ public class Help extends Activity {
 		super.onWindowFocusChanged(hasFocus);
 		
 		//Calcul de tamany de la pantalla
-		View contentView = this.findViewById(R.id.lHelp);
-		int alcadaTotal = contentView.getHeight();
+		//View contentView = this.findViewById(R.id.lHelp);
+		//int alcadaTotal = contentView.getHeight();
 		
 		
 		this.justifyTextView((TextView) this.findViewById(R.id.tHelp2), getString(R.string.tutorial_text_1));
