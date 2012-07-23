@@ -79,7 +79,7 @@ public class StackCalculatorActivity extends Activity{
 		// Look up the AdView as a resource and load a request.
 		AdView adView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest();
-		// adRequest.addTestDevice("5E63C202A7136485DEFA87461EB95C26");
+		adRequest.addTestDevice("565DD0971D493145303E3C0AA27960F7");
 		
 		//adRequest.setTesting(true);
 		adView.loadAd(adRequest);
@@ -224,6 +224,33 @@ public class StackCalculatorActivity extends Activity{
 					aux2.getLayoutParams().height*=prop;
 				}
 			}
+			Display.setOnItemClickListener
+				(
+				new AdapterView.OnItemClickListener() 
+				{
+					public void onItemClick(AdapterView adapterView, View view,int arg2, long arg3)
+					{
+						/*int selectedPosition = adapterView.getSelectedItemPosition();
+						ShowAlert(String.valueOf(selectedPosition));*/
+						Double d=stack.get(arg2);
+						stack.addFirst(d);
+						showedData.addFirstItem(d.toString());
+					}
+				}
+				);
+			
+			Display.setOnLongClickListener
+				(
+				new AdapterView.OnLongClickListener() 
+				{
+					
+					public boolean onLongClick(View arg0) {
+						
+						ShowAlert(String.valueOf(arg0));
+						return true;
+					}
+				}
+				);
 			
 
 			//Log.i("stackCalculatorActivity", "Alï¿½ada total de:" + Integer.toString(alcadaTotal));
@@ -264,6 +291,34 @@ public class StackCalculatorActivity extends Activity{
 			ListView Display = (ListView) this.findViewById(R.id.DisplayList);
 			Display.getLayoutParams().height = alcadaTotal;
 			Display.setAdapter(showedData);
+			
+			Display.setOnItemClickListener
+				(
+				new AdapterView.OnItemClickListener() 
+				{
+					public void onItemClick(AdapterView adapterView, View view,int arg2, long arg3)
+					{
+						/*int selectedPosition = adapterView.getSelectedItemPosition();
+						ShowAlert(String.valueOf(selectedPosition));*/
+						Double d=stack.get(arg2);
+						stack.addFirst(d);
+						showedData.addFirstItem(d.toString());
+					}
+				}
+				);
+			
+			Display.setOnLongClickListener
+				(
+				new AdapterView.OnLongClickListener() 
+				{
+					
+					public boolean onLongClick(View arg0) {
+						
+						ShowAlert(String.valueOf(arg0));
+						return true;
+					}
+				}
+				);
 			//nLines = alcadaTotal / Display.getLineHeight() - 1;
 			//Log.i("stackCalculatorActivity", "Alï¿½ada total de:" + Integer.toString(alcadaTotal));
 			//this.refreshView();
@@ -466,7 +521,7 @@ public class StackCalculatorActivity extends Activity{
 				((Button) findViewById(R.id.bTan)).setText("Tan");
 			}
 			((Button) findViewById(R.id.bLn)).setText("Ln");
-			((Button) findViewById(R.id.bSqrt)).setText("ï¿½x");
+			((Button) findViewById(R.id.bSqrt)).setText("Ãx");
 			((Button) findViewById(R.id.bEx)).setText("e^y");
 		}
 	}

@@ -1,6 +1,5 @@
 package es.jaumesingla.StackCalculator;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author dracks
+ * @author Jaume Singla Valls
  */
 public class ResultsViewAdapter extends BaseAdapter {
 	private static class ViewHolder {
@@ -30,13 +29,21 @@ public class ResultsViewAdapter extends BaseAdapter {
 
 	public void addItem(final String item) {
 		Log.d("MyCustomAdapter", item);
-		mData.add(item);
+		if (item.endsWith(".0")){
+			mData.add(item.replace(".0", ""));
+		} else {
+			mData.add(item);
+		}
 		notifyDataSetChanged();
 	}
 
 	public void addFirstItem(final String item) {
 		Log.d("MyCustomAdapter", item);
-		mData.add(0, item);
+		if (item.endsWith(".0")){
+			mData.add(0, item.replace(".0", ""));
+		} else {
+			mData.add(0, item);
+		}
 		notifyDataSetChanged();
 	}
 
@@ -59,12 +66,23 @@ public class ResultsViewAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		Log.d("MyCustomAdapter", "getCount"+Integer.toString(mData.size()));
-		return mData.size();
+		if (newValue!=null){
+			return mData.size()+1;
+		} else 
+			return mData.size();
 	}
 
 	@Override
 	public String getItem(int position) {
-		return mData.get(position);
+		if (newValue==null)
+			return mData.get(position);
+		else {
+			if (position==0){
+				return newValue;
+			} else 
+				return mData.get(position-1);
+		}
+			
 	}
 
 	@Override
@@ -89,17 +107,20 @@ public class ResultsViewAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder)convertView.getTag();
 		}
+		
 		if (newValue!=null){
-			position--;
-			if (position<0){
+			if (position==0){
 				holder.textView.setText(newValue);
-					holder.labelPos.setText("<<<<");
+				holder.labelPos.setText(" <<<");
 				return convertView;
 			}
 		}
+		
+		int rCount=mData.size();
+		
 		holder.textView.setText(mData.get(position));
 
-		String posText="   "+Integer.toString(position);
+		String posText="   "+Integer.toString(rCount-position);
 		holder.labelPos.setText(":"+posText.subSequence(posText.length()-3, posText.length()));
 		return convertView;
 	}

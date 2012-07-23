@@ -22,7 +22,7 @@
 	<ListView
             android:id="@+id/DisplayList"
             android:layout_width="1dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dip"
             android:layout_weight="10" 
             >
         </ListView>
@@ -153,7 +153,7 @@
 
         <Button
             android:id="@+id/Enter"
-            android:layout_width="128sp"
+            android:layout_width="0dp"
             android:layout_height="49sp"
             android:layout_gravity="fill_horizontal"
             android:layout_weight="1"
@@ -263,7 +263,7 @@
         android:clipToPadding="false" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/button0"
             android:layout_width="128sp"
             android:layout_height="49sp"
             android:layout_weight="1"
@@ -272,7 +272,7 @@
             android:text="0" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonPoint"
             android:layout_width="64sp"
             android:layout_height="49sp"
             android:background="@drawable/b_blau"

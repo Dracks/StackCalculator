@@ -21,12 +21,16 @@
     </EditText>  -->
     
     <ListView
-        android:gravity="bottom"
-		android:id="@+id/DisplayList"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_weight="10" 
-            >
+        android:id="@+id/DisplayList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:layout_weight="10"
+        android:background="@drawable/fons_fosc"
+        android:choiceMode="none"
+        android:dividerHeight="0dp"
+        android:gravity="bottom" >
+
         </ListView>
 
     <LinearLayout
