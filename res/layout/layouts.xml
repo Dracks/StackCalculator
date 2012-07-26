@@ -23,7 +23,7 @@
     <ListView
         android:id="@+id/DisplayList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
         android:layout_margin="4dp"
         android:layout_weight="10"
         android:background="@drawable/fons_fosc"
@@ -45,7 +45,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickSin"
-            android:text="sin" />
+            android:text="@string/sin" />
 
         <Button
             android:id="@+id/bCos"
@@ -53,7 +53,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickCos"
-            android:text="cos" />
+            android:text="@string/cos" />
 
         <Button
             android:id="@+id/bTan"
@@ -61,7 +61,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickTan"
-            android:text="tan" />
+            android:text="@string/tan" />
 
         <Button
             android:id="@+id/bShift"
@@ -69,7 +69,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_vermell"
             android:onClick="onClickShift"
-            android:text="Fn" />
+            android:text="@string/Fn" />
 
         <Button
             android:id="@+id/bUp"
@@ -77,7 +77,7 @@
             android:layout_height="49sp"
             android:background="@drawable/boto_quad"
             android:onClick="onClickUp"
-            android:text="Up" />
+            android:text="@string/Up" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,7 +92,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickIntegralEx"
-            android:text="e^x" />
+            android:text="@string/pow" />
 
         <Button
             android:id="@+id/bLn"
@@ -100,7 +100,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickLn"
-            android:text="ln" />
+            android:text="@string/ln" />
 
         <Button
             android:id="@+id/bSqrt"
@@ -108,7 +108,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickSqrt"
-            android:text="√x" />
+            android:text="@string/sqrt" />
 
         <Button
             android:id="@+id/bDel"
@@ -116,7 +116,7 @@
             android:layout_height="49sp"
             android:background="@drawable/boto_quad"
             android:onClick="onClickDel"
-            android:text="Delete" />
+            android:text="@string/Delete" />
 
         <Button
             android:id="@+id/bDown"
@@ -124,7 +124,7 @@
             android:layout_height="49sp"
             android:background="@drawable/boto_quad"
             android:onClick="onClickDown"
-            android:text="Down" />
+            android:text="@string/Down" />
     </LinearLayout>
 
     <LinearLayout
@@ -139,7 +139,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="7" />
+            android:text="@string/seven" />
 
         <Button
             android:id="@+id/button8"
@@ -147,7 +147,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="8" />
+            android:text="@string/eight" />
 
         <Button
             android:id="@+id/button9"
@@ -155,7 +155,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="9" />
+            android:text="@string/nine" />
 
         <Button
             android:id="@+id/Enter"
@@ -165,7 +165,7 @@
             android:layout_weight="1"
             android:background="@drawable/boto_quad_llarg"
             android:onClick="onClickEnter"
-            android:text="Enter" />
+            android:text="@string/Enter" />
     </LinearLayout>
 
     <LinearLayout
@@ -180,7 +180,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="4" />
+            android:text="@string/four" />
 
         <Button
             android:id="@+id/button5"
@@ -188,7 +188,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="5" />
+            android:text="@string/five" />
 
         <Button
             android:id="@+id/button6"
@@ -196,7 +196,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="6" />
+            android:text="@string/six" />
 
         <Button
             android:id="@+id/bAdd"
@@ -204,7 +204,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickAdd"
-            android:text="+" />
+            android:text="@string/add" />
 
         <Button
             android:id="@+id/bSub"
@@ -212,7 +212,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickSub"
-            android:text="-" />
+            android:text="@string/subs" />
     </LinearLayout>
 
     <LinearLayout
@@ -227,7 +227,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="1" />
+            android:text="@string/one" />
 
         <Button
             android:id="@+id/button2"
@@ -235,7 +235,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="2" />
+            android:text="@string/two" />
 
         <Button
             android:id="@+id/button3"
@@ -243,7 +243,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="3" />
+            android:text="@string/three" />
 
         <Button
             android:id="@+id/bMul"
@@ -251,7 +251,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickMul"
-            android:text="*" />
+            android:text="@string/mult" />
 
         <Button
             android:id="@+id/bDiv"
@@ -259,7 +259,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickDiv"
-            android:text="/" />
+            android:text="@string/div" />
     </LinearLayout>
 
     <LinearLayout
@@ -269,21 +269,21 @@
         android:clipToPadding="false" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/b0"
             android:layout_width="128sp"
             android:layout_height="49sp"
             android:layout_weight="1"
             android:background="@drawable/b_llarg_blau"
             android:onClick="onClickChar"
-            android:text="0" />
+            android:text="@string/zero" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bDot"
             android:layout_width="64sp"
             android:layout_height="49sp"
             android:background="@drawable/b_blau"
             android:onClick="onClickChar"
-            android:text="." />
+            android:text="@string/dot" />
 
         <Button
             android:id="@+id/bLog"
@@ -292,7 +292,7 @@
             android:layout_weight="1"
             android:background="@drawable/b_blau"
             android:onClick="onClickPi"
-            android:text="π" />
+            android:text="@string/pi" />
 
         <Button
             android:id="@+id/bInv"
@@ -300,7 +300,7 @@
             android:layout_height="49sp"
             android:background="@drawable/b_lila"
             android:onClick="onClickInv"
-            android:text="1/X" />
+            android:text="@string/inv" />
     </LinearLayout>
 
     <LinearLayout
@@ -308,12 +308,13 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_gravity="center"
-        android:gravity="bottom" >
+        android:gravity="bottom|center_horizontal" >
 
         <com.google.ads.AdView
             android:id="@+id/adView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
             ads:adSize="BANNER"
             ads:adUnitId="a14ea5aae19fb63" />
 

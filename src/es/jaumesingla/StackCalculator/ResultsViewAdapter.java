@@ -118,7 +118,7 @@ public class ResultsViewAdapter extends BaseAdapter {
 		
 		int rCount=mData.size();
 		
-		holder.textView.setText(mData.get(position));
+		holder.textView.setText(this.getItem(position));
 
 		String posText="   "+Integer.toString(rCount-position);
 		holder.labelPos.setText(":"+posText.subSequence(posText.length()-3, posText.length()));

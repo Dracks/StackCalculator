@@ -462,27 +462,27 @@ public class StackCalculatorActivity extends Activity{
 		if (shifted) {
 			//((Button) findViewById(R.id.bShift)).setText("Unshift");
 			//((Button) findViewById(R.id.bDiv)).setText("1/x");
-			((Button) findViewById(R.id.bSub)).setText("-x");
+			((Button) findViewById(R.id.bSub)).setText(R.string.minusx);
 			if (findViewById(R.id.bSin)!=null){
-				((Button) findViewById(R.id.bSin)).setText("Arcsin");
-				((Button) findViewById(R.id.bCos)).setText("Arccos");
-				((Button) findViewById(R.id.bTan)).setText("Arctan");
+				((Button) findViewById(R.id.bSin)).setText(R.string.arcsin);
+				((Button) findViewById(R.id.bCos)).setText(R.string.arccos);
+				((Button) findViewById(R.id.bTan)).setText(R.string.arctan);
 			}
-			((Button) findViewById(R.id.bLn)).setText("Log");
-			((Button) findViewById(R.id.bSqrt)).setText("x^2");
-			((Button) findViewById(R.id.bEx)).setText("x^y");
+			((Button) findViewById(R.id.bLn)).setText(R.string.log);
+			((Button) findViewById(R.id.bSqrt)).setText(R.string.square);
+			((Button) findViewById(R.id.bEx)).setText(R.string.powxy);
 		} else {
 			//((Button) findViewById(R.id.bShift)).setText("Shift");
 			//((Button) findViewById(R.id.bDiv)).setText("/");
-			((Button) findViewById(R.id.bSub)).setText("-");
+			((Button) findViewById(R.id.bSub)).setText(R.string.subs);
 			if (findViewById(R.id.bSin)!=null){
-				((Button) findViewById(R.id.bSin)).setText("Sin");
-				((Button) findViewById(R.id.bCos)).setText("Cos");
-				((Button) findViewById(R.id.bTan)).setText("Tan");
+				((Button) findViewById(R.id.bSin)).setText(R.string.sin);
+				((Button) findViewById(R.id.bCos)).setText(R.string.cos);
+				((Button) findViewById(R.id.bTan)).setText(R.string.tan);
 			}
-			((Button) findViewById(R.id.bLn)).setText("Ln");
-			((Button) findViewById(R.id.bSqrt)).setText("Ãx");
-			((Button) findViewById(R.id.bEx)).setText("e^y");
+			((Button) findViewById(R.id.bLn)).setText(R.string.ln);
+			((Button) findViewById(R.id.bSqrt)).setText(R.string.sqrt);
+			((Button) findViewById(R.id.bEx)).setText(R.string.pow);
 		}
 	}
 
