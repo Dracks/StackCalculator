@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,68 +19,35 @@ public class ResultsViewAdapter extends BaseAdapter {
 		public TextView labelPos;
 	}
 		 
-	private ArrayList<String> mData = new ArrayList<String>();
+	//private ArrayList<String> mData = new ArrayList<String>();
+	private DataModel mData;
+	private List<Double> mList;
 	private LayoutInflater mInflater;
-	private String newValue=null;
 
 	public ResultsViewAdapter(LayoutInflater i) {
 		mInflater = i;
-	}
-
-	public void addItem(final String item) {
-		Log.d("MyCustomAdapter", item);
-		if (item.endsWith(".0")){
-			mData.add(item.replace(".0", ""));
-		} else {
-			mData.add(item);
-		}
-		notifyDataSetChanged();
-	}
-
-	public void addFirstItem(final String item) {
-		Log.d("MyCustomAdapter", item);
-		if (item.endsWith(".0")){
-			mData.add(0, item.replace(".0", ""));
-		} else {
-			mData.add(0, item);
-		}
-		notifyDataSetChanged();
-	}
-
-	public void removeItem(int p){
-		mData.remove(p);
-		notifyDataSetChanged();
-	}
-
-	public void setNewValue(String s){
-		newValue=s;
-		notifyDataSetChanged();
-	}
-
-	public void pushNewValue(){
-		mData.add(0,newValue);
-		newValue=null;
-		notifyDataSetChanged();
+		mData=DataModel.getInstance();
+		mList=mData.getListData();
 	}
 
 	@Override
 	public int getCount() {
-		Log.d("MyCustomAdapter", "getCount"+Integer.toString(mData.size()));
-		if (newValue!=null){
-			return mData.size()+1;
+		//Log.d("MyCustomAdapter", "getCount"+Integer.toString(mData.size()));
+		if (mData.hasNewValue()){
+			return mList.size()+1;
 		} else 
-			return mData.size();
+			return mList.size();
 	}
 
 	@Override
 	public String getItem(int position) {
-		if (newValue==null)
-			return mData.get(position);
+		if (!mData.hasNewValue())
+			return mList.get(position).toString();
 		else {
 			if (position==0){
-				return newValue;
+				return mData.getNewValue();
 			} else 
-				return mData.get(position-1);
+				return mList.get(position-1).toString();
 		}
 			
 	}
@@ -108,15 +75,15 @@ public class ResultsViewAdapter extends BaseAdapter {
 			holder = (ViewHolder)convertView.getTag();
 		}
 		
-		if (newValue!=null){
+		if (mData.hasNewValue()){
 			if (position==0){
-				holder.textView.setText(newValue);
+				holder.textView.setText(mData.getNewValue());
 				holder.labelPos.setText(" <<<");
 				return convertView;
 			}
 		}
 		
-		int rCount=mData.size();
+		int rCount=mList.size();
 		
 		holder.textView.setText(this.getItem(position));
 

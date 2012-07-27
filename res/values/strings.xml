@@ -12,7 +12,6 @@
 	<string name="arccos">Arccos</string>
 	<string name="arctan">Arctan</string>
 	<string name="Fn">Fn</string>
-	<string name="Up">Up</string>
 	<string name="pow">e^x</string>
 	<string name="ln">ln</string>
 	<string name="sqrt">√x</string>
@@ -20,7 +19,6 @@
 	<string name="square">x^2</string>
 	<string name="log">log</string>
 	<string name="Delete">Delete</string>
-	<string name="Down">Down</string>
 	<string name="seven">7</string>
 	<string name="eight">8</string>
 	<string name="nine">9</string>
@@ -30,7 +28,7 @@
 	<string name="six">6</string>
 	<string name="add">+</string>
 	<string name="subs">-</string>
-	<string name="minusx">-</string>
+	<string name="minusx">-X</string>
 	<string name="one">1</string>
 	<string name="two">2</string>
 	<string name="three">3</string>
@@ -40,6 +38,8 @@
 	<string name="dot">.</string>
 	<string name="pi">π</string>
 	<string name="inv">1/X</string>
+	<string name="exchange">Swap</string>
+	<string name="undo">Undo</string>
 	<string name="design">Designed by:</string>
 	<string name="program">Programmed by:</string>
 	<string name="close">CLOSE</string>

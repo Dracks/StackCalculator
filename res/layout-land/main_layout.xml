@@ -71,8 +71,8 @@
 	            android:layout_width="64sp"
 	            android:layout_height="49sp"
 	            android:background="@drawable/boto_quad"
-	            android:onClick="onClickUp"
-	            android:text="@string/Up" />
+	            android:onClick="onClickExchange"
+	            android:text="@string/exchange" />
 
 	    </LinearLayout>
 	
@@ -119,8 +119,8 @@
 	            android:layout_width="64sp"
 	            android:layout_height="49sp"
 	            android:background="@drawable/boto_quad"
-	            android:onClick="onClickDown"
-	            android:text="@string/Down" />
+	            android:onClick="onClickUndo"
+	            android:text="@string/undo" />
 	    </LinearLayout>
 	
 	    <LinearLayout
