@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/lVertical_buttons" >    
+	<LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+        <Button
+                android:id="@+id/bSin"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickSin"
+                android:text="@string/sin"/>
+
+        <Button
+                android:id="@+id/bCos"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickCos"
+                android:text="@string/cos"/>
+
+        <Button
+                android:id="@+id/bTan"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickTan"
+                android:text="@string/tan"/>
+
+        <Button
+                android:id="@+id/bShift"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_vermell"
+                android:onClick="onClickShift"
+                android:text="@string/Fn"/>
+
+        <Button
+                android:id="@+id/bUp"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/boto_quad"
+                android:onClick="onClickExchange"
+                android:text="@string/exchange"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+        <Button
+                android:id="@+id/bEx"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickIntegralEx"
+                android:text="@string/pow"/>
+
+        <Button
+                android:id="@+id/bLn"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickLn"
+                android:text="@string/ln"/>
+
+        <Button
+                android:id="@+id/bSqrt"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickSqrt"
+                android:text="@string/sqrt"/>
+
+        <Button
+                android:id="@+id/bDel"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/boto_quad"
+                android:onClick="onClickDel"
+                android:text="@string/Delete"/>
+
+        <Button
+                android:id="@+id/bDown"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/boto_quad"
+                android:onClick="onClickUndo"
+                android:text="@string/undo"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+        <Button
+                android:id="@+id/button7"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/seven"/>
+
+        <Button
+                android:id="@+id/button8"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/eight"/>
+
+        <Button
+                android:id="@+id/button9"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/nine"/>
+
+        <Button
+                android:id="@+id/Enter"
+                android:layout_width="128sp"
+                android:layout_height="49sp"
+                android:layout_gravity="fill_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/boto_quad_llarg"
+                android:onClick="onClickEnter"
+                android:text="@string/Enter"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+        <Button
+                android:id="@+id/button4"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/four"/>
+
+        <Button
+                android:id="@+id/button5"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/five"/>
+
+        <Button
+                android:id="@+id/button6"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/six"/>
+
+        <Button
+                android:id="@+id/bAdd"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickAdd"
+                android:text="@string/add"/>
+
+        <Button
+                android:id="@+id/bSub"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickSub"
+                android:text="@string/subs"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+        <Button
+                android:id="@+id/button1"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/one"/>
+
+        <Button
+                android:id="@+id/button2"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/two"/>
+
+        <Button
+                android:id="@+id/button3"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/three"/>
+
+        <Button
+                android:id="@+id/bMul"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickMul"
+                android:text="@string/mult"/>
+
+        <Button
+                android:id="@+id/bDiv"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickDiv"
+                android:text="@string/div"/>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+
+        <Button
+                android:id="@+id/b0"
+                android:layout_width="128sp"
+                android:layout_height="49sp"
+                android:layout_weight="1"
+                android:background="@drawable/b_llarg_blau"
+                android:onClick="onClickChar"
+                android:text="@string/zero"/>
+
+        <Button
+                android:id="@+id/bDot"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickChar"
+                android:text="@string/dot"/>
+
+        <Button
+                android:id="@+id/bLog"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:layout_weight="1"
+                android:background="@drawable/b_blau"
+                android:onClick="onClickPi"
+                android:text="@string/pi"/>
+
+        <Button
+                android:id="@+id/bInv"
+                android:layout_width="64sp"
+                android:layout_height="49sp"
+                android:background="@drawable/b_lila"
+                android:onClick="onClickInv"
+                android:text="@string/inv"/>
+    </LinearLayout>
+</LinearLayout>

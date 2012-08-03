@@ -1,10 +1,13 @@
 package es.jaumesingla.StackCalculator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 //import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 //import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,10 +20,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 //import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.AdapterView.OnItemLongClickListener;
+
 import com.google.ads.*;
 
 import es.jaumesingla.StackCalculator.AngleConversor.ConversorInterface;
@@ -31,6 +38,11 @@ import es.jaumesingla.StackCalculator.AngleConversor.RadiantConversor;
 
 public class StackCalculatorActivity extends Activity{
 
+	public interface UndoRedo{
+		public void undo(DataModel dm);
+		public void redo(DataModel dm);
+		public String getOperationName();
+	}
 	//private LinkedList<Double> stack;
 	//private double				write;
 	//private String write;
@@ -47,9 +59,12 @@ public class StackCalculatorActivity extends Activity{
 	private static final String dataName="StackCalculatorData"; 
 	private static final float dataVersion=1.0f;
 	
+	private static final String TAG="StackCalculatorActivity";
+	
 	private ResultsViewAdapter showedData;
 	
-	
+	ArrayList<UndoRedo> UndoHistorial;
+	ArrayList<UndoRedo> redoHistorial;
 
 	public StackCalculatorActivity() {
 		super();
@@ -141,15 +156,19 @@ public class StackCalculatorActivity extends Activity{
 			}
 		};
 		
-		/*AdapterView.OnLongClickListener longClickListener=new AdapterView.OnLongClickListener() 
-		{
-			
-			public boolean onLongClick(View arg0) {
-				
-				ShowAlert(String.valueOf(arg0));
+		OnItemLongClickListener longClickListener=new AdapterView.OnItemLongClickListener(){
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Log.d(TAG, String.format("Item: %d and Group: %d", arg2, arg3));
 				return true;
 			}
-		};*/
+			
+		};
+		
+		ListView Display=(ListView) this.findViewById(R.id.DisplayList);
+		FrameLayout Shadow=(FrameLayout) this.findViewById(R.id.DisplayShadow);
 
 		if (this.findViewById(R.id.lHorizontal)!=null){
 			horizontal=true;
@@ -162,11 +181,11 @@ public class StackCalculatorActivity extends Activity{
 			int ampladaTotal = contentView.getWidth()/2;
 			//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
 			//EditText Display = (EditText) this.findViewById(R.id.Display);
-			ListView Display = (ListView) this.findViewById(R.id.DisplayList);
-			Display.getLayoutParams().height = alcadaTotal;
-			Display.getLayoutParams().width = ampladaTotal;
+			//Display = (ListView) this.findViewById(R.id.DisplayList);
+			
+			Shadow.getLayoutParams().height = alcadaTotal;
+			Shadow.getLayoutParams().width = ampladaTotal;
 			//nLines = alcadaTotal / Display.getLineHeight() - 1;
-			Display.setAdapter(showedData);
 			//Log.d("StackCalculatorActivity", "Stack Size:"+stack.size());
 			
 			//this.refreshView();
@@ -199,9 +218,6 @@ public class StackCalculatorActivity extends Activity{
 					aux2.getLayoutParams().height*=prop;
 				}
 			}
-			Display.setOnItemClickListener( clickListener );
-			
-			//Display.setOnLongClickListener(longClickListener);
 			
 
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
@@ -239,17 +255,17 @@ public class StackCalculatorActivity extends Activity{
 			alcadaTotal -= this.findViewById(R.id.linearLayout7).getHeight();
 			//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
 			//EditText Display = (EditText) this.findViewById(R.id.Display);
-			ListView Display = (ListView) this.findViewById(R.id.DisplayList);
-			Display.getLayoutParams().height = alcadaTotal;
-			Display.setAdapter(showedData);
-			
-			Display.setOnItemClickListener( clickListener );
-			
-			//Display.setOnLongClickListener(longClickListener);
+			//Display = (ListView) this.findViewById(R.id.DisplayList);
+			Shadow.getLayoutParams().height = alcadaTotal;
 			//nLines = alcadaTotal / Display.getLineHeight() - 1;
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
 			//this.refreshView();
 		}
+		Display.setAdapter(showedData);
+		
+		Display.setOnItemClickListener( clickListener );
+		
+		Display.setOnItemLongClickListener(longClickListener);
 		//this.refreshView();
 		//updateSizeInfo();
 	}
@@ -804,7 +820,7 @@ public class StackCalculatorActivity extends Activity{
 	Log.d("StackCalculatorActivity", "holamon-Button");
 	
 	}//*/
-/*
+
 	private void ShowAlert(String msg) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 				this);
