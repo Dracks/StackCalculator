@@ -3,12 +3,108 @@ package es.jaumesingla.StackCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
+import junit.framework.Assert;
+
+import es.jaumesingla.StackCalculator.StackCalculatorActivity.UndoRedo;
 import es.jaumesingla.StackCalculator.AngleConversor.ConversorInterface;
 
 public class DataModel {
 	private String newValue;
 	private ArrayList<Double> listData;
 	private static DataModel instance;
+	private int idOperation;
+	
+	public abstract class UndoRedoValuesClass implements UndoRedo{
+		private String operation;
+		private int nOperation;
+		private static final String TAG="DataModel-UndoRedoValuesClass";
+		private DataModel dm;
+		
+		public UndoRedoValuesClass(DataModel dm, String operation){
+			this.operation=operation;
+			dm.idOperation++;
+			this.nOperation=dm.idOperation;
+			Assert.assertEquals(dm.idOperation, this.nOperation);
+			this.dm=dm;
+		}
+	
+		protected void privateUndo(DataModel dm) {
+			Log.d(TAG, this.operation);
+			Assert.assertEquals(dm.idOperation, this.dm.idOperation);
+			Assert.assertEquals(dm.idOperation, this.nOperation);
+			dm.idOperation--;
+		}
+
+		protected void privateRedo(DataModel dm) {
+			Assert.assertEquals(dm.idOperation-1, this.nOperation);
+			dm.idOperation++;
+		}
+
+		@Override
+		public String getOperationName() {
+			return operation;
+		}
+	}
+	
+	public class TwoValuesUndoRedo extends UndoRedoValuesClass{
+		private Double a;
+		private Double b;
+		private Double r;
+
+		public TwoValuesUndoRedo(DataModel dm, String operation, Double a, Double b, Double r) {
+			super(dm, operation);
+			this.a=a;
+			this.b=b;
+			this.r=r;
+		}
+
+		@Override
+		public void undo(DataModel dm) {
+			super.privateUndo(dm);
+			dm.popData();
+			dm.pushValue(this.b);
+			dm.pushValue(this.a);
+			
+		}
+
+		@Override
+		public void redo(DataModel dm) {
+			super.privateRedo(dm);
+			dm.popData();
+			dm.popData();
+			dm.pushValue(this.r);	
+		}
+	}
+	
+	public class OneValueUndoRedo extends UndoRedoValuesClass{
+		private Double a;
+		private Double r;
+
+		public OneValueUndoRedo(DataModel dm, String operation, Double a, Double r) {
+			super(dm, operation);
+			this.a=a;
+			this.r=r;
+		}
+
+		@Override
+		public void undo(DataModel dm) {
+			super.privateUndo(dm);
+			dm.popData();
+			dm.pushValue(this.a);
+			
+		}
+
+		@Override
+		public void redo(DataModel dm) {
+			super.privateRedo(dm);
+			dm.popData();
+			dm.pushValue(this.r);	
+		}
+	}
+	
+	
 	
 	private DataModel(){
 		newValue=null;
@@ -83,10 +179,12 @@ public class DataModel {
 			this.newValue=newValue;
 		}
 	}
-	
 	public void deleteValue(){
-		if (listData.size()>0){
-			listData.remove(0);
+		this.deleteValue(0);
+	}
+	public void deleteValue(int id){
+		if (listData.size()>id){
+			listData.remove(id);
 		}
 	}
 	
@@ -96,143 +194,238 @@ public class DataModel {
 		return r;
 	}
 	
-	public void operationAdd(){
+	public UndoRedo operationAdd(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=2){
 			Double a=this.popData();
 			Double b=this.popData();
-			this.pushValue(Double.valueOf(a+b));
+			Double r=Double.valueOf(a+b);
+			this.pushValue(r);
+			undoredo=new TwoValuesUndoRedo(this, "Add", a, b, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationSubs(){
+	public UndoRedo operationSubs(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=2){
 			Double a=this.popData();
 			Double b=this.popData();
-			this.pushValue(Double.valueOf(a-b));
-		}		
-	}
-	
-	public void operationMinusX(){
-		if (listData.size()>=1){
-			this.pushValue(Double.valueOf(-this.popData()));
+			Double r=Double.valueOf(a-b);
+			this.pushValue(r);
+			undoredo=new TwoValuesUndoRedo(this, "Subs", a, b, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationMultiply(){
+	public UndoRedo operationMinusX(){
+		UndoRedo undoredo=null;
+		if (listData.size()>=1){
+			Double v=this.popData();
+			Double r=Double.valueOf(-v);
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "MinusX", v, r);
+		}
+		return undoredo;
+	}
+	
+	public UndoRedo operationMultiply(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=2){
 			Double a=this.popData();
 			Double b=this.popData();
-			this.pushValue(Double.valueOf(a*b));
-		}		
+			Double r=Double.valueOf(a*b);
+			this.pushValue(r);
+			undoredo=new TwoValuesUndoRedo(this, "Mul", a, b, r);
+		}
+		return undoredo;
 	}
 	
-	public void operationDivided(){
+	public UndoRedo operationDivided(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=2){
 			Double a=this.popData();
 			Double b=this.popData();
-			this.pushValue(Double.valueOf(a/b));
-		}		
+			Double r=Double.valueOf(a/b);
+			this.pushValue(r);
+			undoredo=new TwoValuesUndoRedo(this, "Div", a, b, r);
+		}
+		return undoredo;
 	}
 	
-	public void operationInverse(){
+	public UndoRedo operationInverse(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(1/v));
-		}		
+			Double r=Double.valueOf(1/v);
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "Inverse", v, r);
+		}	
+		return undoredo;
 	}
 	
-	public void operationPowSquare(){
-		if (listData.size()>=1){
-			Double a=this.popData();
-			this.pushValue(Double.valueOf(a*a));
-		}
-	}
-	
-	public void operationSqrt(){
+	public UndoRedo operationPowSquare(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(Math.sqrt(v)));
+			Double r=Double.valueOf(v*v);
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "PowSquare", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationPow(){
+	public UndoRedo operationSqrt(){
+		UndoRedo undoredo=null;
+		if (listData.size()>=1){
+			Double v=this.popData();
+			Double r=Double.valueOf(Math.sqrt(v));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "Sqrt", v, r);
+		}
+		return undoredo;
+	}
+	
+	public UndoRedo operationPow(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=2){
 			Double a=this.popData();
 			Double b=this.popData();
-			this.pushValue(Double.valueOf(Math.pow(b,a)));
+			Double r=Double.valueOf(Math.pow(b,a));
+			this.pushValue(r);
+			undoredo=new TwoValuesUndoRedo(this, "Pow", a, b, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationLog(){
+	public UndoRedo operationLog(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(Math.log10(v)));
+			Double r=Double.valueOf(Math.log10(v));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "Log", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationEPowX(){
+	public UndoRedo operationEPowX(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(Math.exp(v)));
+			Double r=Double.valueOf(Math.exp(v));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "EPowX", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationLn(){
+	public UndoRedo operationLn(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(Math.log(v)));
+			Double r=Double.valueOf(Math.log(v));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "Ln", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationSin(ConversorInterface conv){
+	public UndoRedo operationSin(ConversorInterface conv){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(Math.sin(conv.toProcess(v))));
+			Double r=Double.valueOf(Math.sin(conv.toProcess(v)));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "Sin", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationCos(ConversorInterface conv){
+	public UndoRedo operationCos(ConversorInterface conv){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(Math.cos(conv.toProcess(v))));
+			Double r=Double.valueOf(Math.cos(conv.toProcess(v)));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "Cos", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationTan(ConversorInterface conv){
+	public UndoRedo operationTan(ConversorInterface conv){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(Math.tan(conv.toProcess(v))));
+			Double r=Double.valueOf(Math.tan(conv.toProcess(v)));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "Tan", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationArcsin(ConversorInterface conv){
+	public UndoRedo operationArcsin(ConversorInterface conv){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(conv.toShow(Math.asin(v))));
+			Double r=Double.valueOf(conv.toShow(Math.asin(v)));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "ArcSin", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationArccos(ConversorInterface conv){
+	public UndoRedo operationArccos(ConversorInterface conv){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(conv.toShow(Math.acos(v))));
+			Double r=Double.valueOf(conv.toShow(Math.acos(v)));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "ArcCos", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationArctan(ConversorInterface conv){
+	public UndoRedo operationArctan(ConversorInterface conv){
+		UndoRedo undoredo=null;
 		if (listData.size()>=1){
 			Double v=this.popData();
-			this.pushValue(Double.valueOf(conv.toShow(Math.atan(v))));
+			Double r=Double.valueOf(conv.toShow(Math.atan(v)));
+			this.pushValue(r);
+			undoredo=new OneValueUndoRedo(this, "ArcTan", v, r);
 		}
+		return undoredo;
 	}
 	
-	public void operationSwap(){
+	public UndoRedo operationSwap(){
+		UndoRedo undoredo=null;
 		if (listData.size()>=2){
 			Double a=this.popData();
 			Double b=this.popData();
 			this.pushValue(a);
 			this.pushValue(b);
+			undoredo=new UndoRedoValuesClass(this, "Swap") {
+				
+				@Override
+				public void undo(DataModel dm) {
+					super.privateUndo(dm);
+					Double a=dm.popData();
+					Double b=dm.popData();
+					dm.pushValue(a);
+					dm.pushValue(b);
+				}
+				
+				@Override
+				public void redo(DataModel dm) {
+					super.privateUndo(dm);
+					Double a=dm.popData();
+					Double b=dm.popData();
+					dm.pushValue(a);
+					dm.pushValue(b);
+				}
+			};
 		}
+		return undoredo;
 	}
 	
 	public List<Double> getListData() {

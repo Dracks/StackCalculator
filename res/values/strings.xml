@@ -48,5 +48,8 @@
 	<string name="degrees">Degrees</string>
 	<string name="help">Help</string>
 	<string name="about">About</string>
-	
+	<string name="delete">Delete</string>
+	<string name="clipboardCopy">Copy to clipboard</string>
+	<string name="clipboardPaste">Paste from clipboard</string>
+	<string name="value">Value:</string>
 </resources>

@@ -3,29 +3,27 @@ package es.jaumesingla.StackCalculator;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-//import android.app.AlertDialog;
+import android.text.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
-//import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-//import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.google.ads.*;
@@ -42,6 +40,46 @@ public class StackCalculatorActivity extends Activity{
 		public void undo(DataModel dm);
 		public void redo(DataModel dm);
 		public String getOperationName();
+	}
+	
+	public class Historial{
+		private ArrayList<UndoRedo> undoHistorial;
+		private ArrayList<UndoRedo> redoHistorial;
+		private DataModel dm;
+		
+		public Historial(DataModel dm){
+			this.dm=dm;
+			undoHistorial=new ArrayList<UndoRedo>();
+			redoHistorial=new ArrayList<UndoRedo>();
+		}
+		
+		public void pushOperation(UndoRedo op){
+			undoHistorial.add(op);
+			redoHistorial.clear();
+		}
+		
+		public void undo(){
+			int size=undoHistorial.size();
+			if (size>0){
+				UndoRedo op=undoHistorial.get(size-1);
+				undoHistorial.remove(size-1);
+				op.undo(dm);
+				redoHistorial.add(op);
+			}
+		}
+		public void redo(){
+			int size=redoHistorial.size();
+			if (size>0){
+				UndoRedo op=redoHistorial.get(size-1);
+				op.redo(dm);
+				undoHistorial.add(op);
+			}
+		}
+		
+		public void clear(){
+			undoHistorial.clear();
+			redoHistorial.clear();
+		}
 	}
 	//private LinkedList<Double> stack;
 	//private double				write;
@@ -63,13 +101,13 @@ public class StackCalculatorActivity extends Activity{
 	
 	private ResultsViewAdapter showedData;
 	
-	ArrayList<UndoRedo> UndoHistorial;
-	ArrayList<UndoRedo> redoHistorial;
+	private Historial historial;
 
 	public StackCalculatorActivity() {
 		super();
 		mData=DataModel.getInstance();
 		dadesImportades=false;
+		historial=new Historial(mData);
 	}
 
 	/** Called when the activity is first created. */
@@ -146,26 +184,6 @@ public class StackCalculatorActivity extends Activity{
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		
-		AdapterView.OnItemClickListener clickListener=new AdapterView.OnItemClickListener() 
-		{
-			public void onItemClick(AdapterView<?> adapterView, View view,int arg2, long arg3)
-			{
-				mData.copyValue(arg2);
-				showedData.notifyDataSetChanged();
-			}
-		};
-		
-		OnItemLongClickListener longClickListener=new AdapterView.OnItemLongClickListener(){
-
-			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				Log.d(TAG, String.format("Item: %d and Group: %d", arg2, arg3));
-				return true;
-			}
-			
-		};
 		
 		ListView Display=(ListView) this.findViewById(R.id.DisplayList);
 		FrameLayout Shadow=(FrameLayout) this.findViewById(R.id.DisplayShadow);
@@ -261,11 +279,33 @@ public class StackCalculatorActivity extends Activity{
 			//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
 			//this.refreshView();
 		}
+		
+		AdapterView.OnItemClickListener clickListener=new AdapterView.OnItemClickListener() 
+		{
+			public void onItemClick(AdapterView<?> adapterView, View view,int arg2, long arg3)
+			{
+				mData.copyValue(arg2);
+				showedData.notifyDataSetChanged();
+			}
+		};
+		
+		/*OnItemLongClickListener longClickListener=new AdapterView.OnItemLongClickListener(){
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				Log.d(TAG, String.format("Item: %d and Group: %d", arg2, arg3));
+				return true;
+			}
+			
+		};*/
+		
 		Display.setAdapter(showedData);
 		
 		Display.setOnItemClickListener( clickListener );
 		
-		Display.setOnItemLongClickListener(longClickListener);
+		registerForContextMenu(Display);
+		//Display.setOnItemLongClickListener(longClickListener);
 		//this.refreshView();
 		//updateSizeInfo();
 	}
@@ -294,17 +334,6 @@ public class StackCalculatorActivity extends Activity{
         // display the popup in the center
         pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
         
-       /* WebView wv=(WebView)layout.findViewById(R.id.webView1);
-        if (wv!=null){
-	        String data = "<html><body style='text-align:justify; background: rgba(0,0,0,0)'>" +
-	        		"<p>" + getString(R.string.tutorial_text_1)+ "</p>" +
-	        		"<p>" + getString(R.string.tutorial_text_2)+ "</p>" +
-	        		"<p>" + getString(R.string.tutorial_text_3)+ "</p>" +
-	        		"<p>" + getString(R.string.tutorial_text_4)+ "</p>" +
-	        		"</body></html>";
-	        wv.loadData(data, "text/html", "UTF-8");
-	        
-        }*/
 		
 		//layout.setOnKeyListener(this);
 		//layout.setOnTouchListener(this);
@@ -368,6 +397,76 @@ public class StackCalculatorActivity extends Activity{
 				return super.onOptionsItemSelected(item);
 		}
 	}
+	
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+	                                ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.list_extension_menu, menu);
+	    menu.setHeaderTitle(getResources().getString(R.string.value)+mData.getListData().get((int) ((AdapterContextMenuInfo) menu.getItem(0).getMenuInfo()).id).toString());
+	    
+	    ClipboardManager clipboard=(ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+	    MenuItem mPaste=menu.findItem(R.id.paste);
+	    mPaste.setEnabled(false);
+	    if (clipboard.hasText()){
+	    	try{
+	    		Double.valueOf(clipboard.getText().toString());
+	    		mPaste.setEnabled(true);
+	    	} catch (Exception e){
+	    		
+	    	}
+	    	
+	    } 
+	    /*if (!(clipboard.hasPrimaryClip())) {
+
+	        mPasteItem.setEnabled(false);
+
+	        } else if (!(clipboard.getPrimaryClipDescription().hasMimeType(MIMETYPE_TEXT_PLAIN))) {
+
+	            // This disables the paste menu item, since the clipboard has data but it is not plain text
+	            mPasteItem.setEnabled(false);
+	        } else {
+
+	            // This enables the paste menu item, since the clipboard contains plain text.
+	            mPasteItem.setEnabled(true);
+	        }
+	    }*/
+	    
+	    //menu.findItem(id)
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	    ClipboardManager clipboard;
+	    switch (item.getItemId()) {
+	        case R.id.delete:
+	            Log.d(TAG, "Delete item:"+info.id);
+	            mData.deleteValue((int)info.id);
+	            return true;
+	        case R.id.copy:
+	        	Log.d(TAG, "copy item:"+info.id);
+	        	clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+	        	//ClipData clip = ClipData.newPlainText("simple text","Hello, World!");
+	        	//clipboard.setPrimaryClip(clip);
+	        	clipboard.setText(mData.getListData().get((int) info.id).toString());
+	            return true;
+	        case R.id.paste:
+	        	Log.d(TAG, "Paste no item:");
+	        	clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+	        	//ClipData clip = ClipData.newPlainText("simple text","Hello, World!");
+	        	//clipboard.setPrimaryClip(clip);
+	        	//clipboard.setText(mData.getListData().get((int) info.id).toString());
+	        	try{
+	        		mData.pushValue(Double.valueOf(clipboard.getText().toString()));
+	        	} catch (Exception e){}
+	        	return true;
+	        default:
+	            return super.onContextItemSelected(item);
+	    }
+	}
 
 	public ConversorInterface getConversor() {
 		return conv;
@@ -381,20 +480,6 @@ public class StackCalculatorActivity extends Activity{
 	public void addValue(String c) {
 		//Log.d("StackCalculatorActivity", write);
 		//listData.addItem(c);
-		/*String tmp = write + c;
-		try {
-			//@SuppressWarnings("unused")
-			Double.valueOf(tmp);
-			
-			write = tmp;
-			writing = true;
-			showedData.setNewValue(write);
-			((ListView) this.findViewById(R.id.DisplayList)).smoothScrollToPosition(0);
-			//this.refreshView();
-		} catch (Exception e) {
-			Log.d("StackCalculatorActivity", tmp);
-			Log.d("StackCalculatorActivity", e.toString());
-		}*/
 		mData.addChar(c);
 		showedData.notifyDataSetChanged();
 	}
@@ -468,12 +553,13 @@ public class StackCalculatorActivity extends Activity{
 	}
 
 	public void onClickExchange(View view){
-		mData.operationSwap();
+		historial.pushOperation(mData.operationSwap());
 		showedData.notifyDataSetChanged();
 	}
 	
 	public void onClickUndo(View view){
-		
+		historial.undo();
+		showedData.notifyDataSetChanged();
 	}
 
 	public void onClickEnter(View view) {
@@ -485,20 +571,9 @@ public class StackCalculatorActivity extends Activity{
 				mData.pushNewValue();
 			}
 			showedData.notifyDataSetChanged();
-		}/* else {
-			if (stack.size() > 0) {
-
-				stack.addFirst(stack.get(index));
-				index = 0;
-				if (navigation) {
-					Button back = (Button) this.findViewById(R.id.bDel);
-					back.setText("Delete");
-				}
-			}
-		}*/
+		}
 		writing = false;
 		navigation = false;
-		//this.refreshView();
 	}
 
 	public void onClickDel(View view) {
@@ -542,16 +617,7 @@ public class StackCalculatorActivity extends Activity{
 	public void onClickAdd(View view) {
 		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			double b = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d=Double.valueOf(a + b);
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			mData.operationAdd();
+			historial.pushOperation(mData.operationAdd());
 			showedData.notifyDataSetChanged();
 		}
 		//this.refreshView();
@@ -560,25 +626,9 @@ public class StackCalculatorActivity extends Activity{
 	public void onClickSub(View view) {
 		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (shifted && !mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			
-			Double d=Double.valueOf(-a);
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			mData.operationMinusX();
+			historial.pushOperation(mData.operationMinusX());
 		} else if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			double b = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d=Double.valueOf(b - a);
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			mData.operationSubs();
+			historial.pushOperation(mData.operationSubs());
 		} else if (mData.hasNewValue()) {
 			String nv=mData.getNewValue();
 			if (Double.valueOf(nv) < 0) {
@@ -596,16 +646,7 @@ public class StackCalculatorActivity extends Activity{
 	public void onClickMul(View view) {
 		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			double b = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d=Double.valueOf(a * b);
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			mData.operationMultiply();
+			historial.pushOperation(mData.operationMultiply());
 			showedData.notifyDataSetChanged();
 		}
 		//this.refreshView();
@@ -614,16 +655,7 @@ public class StackCalculatorActivity extends Activity{
 	public void onClickDiv(View view) {
 		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			double b = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d=Double.valueOf(b / a);
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			mData.operationDivided();
+			historial.pushOperation(mData.operationDivided());
 			showedData.notifyDataSetChanged();
 		}
 		//this.refreshView();
@@ -631,13 +663,7 @@ public class StackCalculatorActivity extends Activity{
 	
 	public void onClickInv(View view){
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d=Double.valueOf(1 / a);
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			mData.operationInverse();
+			historial.pushOperation(mData.operationInverse());
 			showedData.notifyDataSetChanged();
 		}
 		//this.refreshView();
@@ -645,21 +671,10 @@ public class StackCalculatorActivity extends Activity{
 
 	public void onClickSin(View view) {
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			Double d;
-			showedData.removeItem(0);
 			if (!shifted) {
-				d=Double.valueOf(Math.sin(conv.toProcess(a)));
+				historial.pushOperation(mData.operationSin(conv));
 			} else {
-				d=Double.valueOf(conv.toShow(Math.asin(a)));
-			}
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			if (!shifted) {
-				mData.operationSin(conv);
-			} else {
-				mData.operationArcsin(conv);
+				historial.pushOperation(mData.operationArcsin(conv));
 			}
 			showedData.notifyDataSetChanged();
 		}
@@ -669,21 +684,10 @@ public class StackCalculatorActivity extends Activity{
 
 	public void onClickCos(View view) {
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d;
 			if (!shifted) {
-				d=Double.valueOf(Math.cos(conv.toProcess(a)));
+				historial.pushOperation(mData.operationCos(conv));
 			} else {
-				d=Double.valueOf(conv.toShow(Math.acos(a)));
-			}
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			if (!shifted) {
-				mData.operationCos(conv);
-			} else {
-				mData.operationArccos(conv);
+				historial.pushOperation(mData.operationArccos(conv));
 			}
 			showedData.notifyDataSetChanged();
 		}
@@ -692,21 +696,10 @@ public class StackCalculatorActivity extends Activity{
 
 	public void onClickTan(View view) {
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d;
 			if (!shifted) {
-				d=Double.valueOf(Math.tan(conv.toProcess(a)));
+				historial.pushOperation(mData.operationTan(conv));
 			} else {
-				d=Double.valueOf(conv.toShow(Math.atan(a)));
-			}
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());//*/
-			if (!shifted) {
-				mData.operationTan(conv);
-			} else {
-				mData.operationArctan(conv);
+				historial.pushOperation(mData.operationArctan(conv));
 			}
 			showedData.notifyDataSetChanged();
 		}
@@ -716,22 +709,11 @@ public class StackCalculatorActivity extends Activity{
 	public void onClickSqrt(View view) {
 		//Log.d("StackCalculatorActivity", "holamon-Button");
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d;
-			if (shifted){
-				d=Double.valueOf(Math.pow(a,2.0f));
-			} else {
-				d=Double.valueOf(Math.sqrt(a));
-			}
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
 			
 			if (shifted) {
-				mData.operationPowSquare();
+				historial.pushOperation(mData.operationPowSquare());
 			} else {
-				mData.operationSqrt();
+				historial.pushOperation(mData.operationSqrt());
 			}
 			showedData.notifyDataSetChanged();
 		}
@@ -741,28 +723,11 @@ public class StackCalculatorActivity extends Activity{
 	public void onClickIntegralEx(View view) {
 		if (shifted){
 			if (!mData.hasNewValue() && !navigation) {
-				/*double a = stack.getFirst().doubleValue();
-				stack.removeFirst();
-				showedData.removeItem(0);
-				double b = stack.getFirst().doubleValue();
-				stack.removeFirst();
-				showedData.removeItem(0);
-				//if (!shifted)
-				Double d=Double.valueOf(Math.pow(b, a));
-				stack.addFirst(d);
-				showedData.addFirstItem(d.toString());*/
-				mData.operationPow();
+				historial.pushOperation(mData.operationPow());
 			}
 		} else{ 
 			if (!mData.hasNewValue() && !navigation) {
-				/*double a = stack.getFirst().doubleValue();
-				stack.removeFirst();
-				showedData.removeItem(0);
-				//if (!shifted)
-				Double d=Double.valueOf(Math.pow(Math.E, a));
-				stack.addFirst(d);
-				showedData.addFirstItem(d.toString());*/
-				mData.operationEPowX();
+				historial.pushOperation(mData.operationEPowX());
 			}
 		}
 		showedData.notifyDataSetChanged();
@@ -771,22 +736,10 @@ public class StackCalculatorActivity extends Activity{
 
 	public void onClickLn(View view) {
 		if (!mData.hasNewValue() && !navigation) {
-			/*double a = stack.getFirst().doubleValue();
-			stack.removeFirst();
-			showedData.removeItem(0);
-			Double d;
 			if (shifted) {
-				d=Double.valueOf(Math.log10(a));
+				historial.pushOperation(mData.operationLog());
 			} else {
-				d=Double.valueOf(Math.log(a));
-			}
-			
-			stack.addFirst(d);
-			showedData.addFirstItem(d.toString());*/
-			if (shifted) {
-				mData.operationLog();
-			} else {
-				mData.operationLn();
+				historial.pushOperation(mData.operationLn());
 			}
 			showedData.notifyDataSetChanged();
 			
@@ -821,7 +774,7 @@ public class StackCalculatorActivity extends Activity{
 	
 	}//*/
 
-	private void ShowAlert(String msg) {
+	/*private void ShowAlert(String msg) {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
 				this);
  
