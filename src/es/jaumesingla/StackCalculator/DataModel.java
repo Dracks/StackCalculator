@@ -23,6 +23,7 @@ public class DataModel {
 		private DataModel dm;
 		
 		public UndoRedoValuesClass(DataModel dm, String operation){
+			Log.d(TAG, operation+":"+dm.idOperation);
 			this.operation=operation;
 			dm.idOperation++;
 			this.nOperation=dm.idOperation;
@@ -64,8 +65,8 @@ public class DataModel {
 		public void undo(DataModel dm) {
 			super.privateUndo(dm);
 			dm.popData();
-			dm.pushValue(this.b);
-			dm.pushValue(this.a);
+			dm.protectedPushValue(this.b);
+			dm.protectedPushValue(this.a);
 			
 		}
 
@@ -74,7 +75,7 @@ public class DataModel {
 			super.privateRedo(dm);
 			dm.popData();
 			dm.popData();
-			dm.pushValue(this.r);	
+			dm.protectedPushValue(this.r);	
 		}
 	}
 	
@@ -92,7 +93,7 @@ public class DataModel {
 		public void undo(DataModel dm) {
 			super.privateUndo(dm);
 			dm.popData();
-			dm.pushValue(this.a);
+			dm.protectedPushValue(this.a);
 			
 		}
 
@@ -100,7 +101,7 @@ public class DataModel {
 		public void redo(DataModel dm) {
 			super.privateRedo(dm);
 			dm.popData();
-			dm.pushValue(this.r);	
+			dm.protectedPushValue(this.r);	
 		}
 	}
 	
@@ -122,7 +123,7 @@ public class DataModel {
 		@Override
 		public void redo(DataModel dm) {
 			super.privateUndo(dm);
-			dm.pushValue(v);
+			dm.protectedPushValue(v);
 			
 		}
 		
@@ -187,8 +188,12 @@ public class DataModel {
 	
 	public UndoRedo pushValue(double d){
 		UndoRedo undoredo=new NewValueUndoRedo(this, "New Value", d);
-		listData.add(0,d);
+		this.protectedPushValue(d);
 		return undoredo;
+	}
+	
+	protected void protectedPushValue(Double d){
+		listData.add(0,d);
 	}
 	
 	public UndoRedo copyValue(int index){
@@ -247,7 +252,7 @@ public class DataModel {
 			Double a=this.popData();
 			Double b=this.popData();
 			Double r=Double.valueOf(a+b);
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new TwoValuesUndoRedo(this, "Add", a, b, r);
 		}
 		return undoredo;
@@ -259,7 +264,7 @@ public class DataModel {
 			Double a=this.popData();
 			Double b=this.popData();
 			Double r=Double.valueOf(a-b);
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new TwoValuesUndoRedo(this, "Subs", a, b, r);
 		}
 		return undoredo;
@@ -270,7 +275,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(-v);
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "MinusX", v, r);
 		}
 		return undoredo;
@@ -282,7 +287,7 @@ public class DataModel {
 			Double a=this.popData();
 			Double b=this.popData();
 			Double r=Double.valueOf(a*b);
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new TwoValuesUndoRedo(this, "Mul", a, b, r);
 		}
 		return undoredo;
@@ -294,7 +299,7 @@ public class DataModel {
 			Double a=this.popData();
 			Double b=this.popData();
 			Double r=Double.valueOf(a/b);
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new TwoValuesUndoRedo(this, "Div", a, b, r);
 		}
 		return undoredo;
@@ -305,7 +310,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(1/v);
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "Inverse", v, r);
 		}	
 		return undoredo;
@@ -316,7 +321,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(v*v);
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "PowSquare", v, r);
 		}
 		return undoredo;
@@ -327,7 +332,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(Math.sqrt(v));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "Sqrt", v, r);
 		}
 		return undoredo;
@@ -339,7 +344,7 @@ public class DataModel {
 			Double a=this.popData();
 			Double b=this.popData();
 			Double r=Double.valueOf(Math.pow(b,a));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new TwoValuesUndoRedo(this, "Pow", a, b, r);
 		}
 		return undoredo;
@@ -350,7 +355,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(Math.log10(v));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "Log", v, r);
 		}
 		return undoredo;
@@ -361,7 +366,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(Math.exp(v));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "EPowX", v, r);
 		}
 		return undoredo;
@@ -372,7 +377,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(Math.log(v));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "Ln", v, r);
 		}
 		return undoredo;
@@ -383,7 +388,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(Math.sin(conv.toProcess(v)));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "Sin", v, r);
 		}
 		return undoredo;
@@ -394,7 +399,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(Math.cos(conv.toProcess(v)));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "Cos", v, r);
 		}
 		return undoredo;
@@ -405,7 +410,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(Math.tan(conv.toProcess(v)));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "Tan", v, r);
 		}
 		return undoredo;
@@ -416,7 +421,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(conv.toShow(Math.asin(v)));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "ArcSin", v, r);
 		}
 		return undoredo;
@@ -427,7 +432,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(conv.toShow(Math.acos(v)));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "ArcCos", v, r);
 		}
 		return undoredo;
@@ -438,7 +443,7 @@ public class DataModel {
 		if (listData.size()>=1){
 			Double v=this.popData();
 			Double r=Double.valueOf(conv.toShow(Math.atan(v)));
-			this.pushValue(r);
+			this.protectedPushValue(r);
 			undoredo=new OneValueUndoRedo(this, "ArcTan", v, r);
 		}
 		return undoredo;
