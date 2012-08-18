@@ -21,54 +21,12 @@
             android:gravity="center"
             android:isScrollContainer="true"
             android:orientation="vertical" >
-            
-        <!--  <TextView
-            android:id="@+id/tHelp1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textSize="25dp"
-            android:textColor="#FFFFFF" />
-             -->
 
-       <ImageView
-           android:id="@+id/imageView1"
-           android:layout_width="fill_parent"
-           android:layout_height="45dp"
-           android:src="@drawable/logo_1i_b1" />
- 
-        <TextView
-            android:id="@+id/tHelp2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:text="@string/tutorial_text_1"
-            android:textColor="#FFFFFF" />
-        
-        <TextView
-            android:id="@+id/tHelp3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:text="@string/tutorial_text_2"
-            android:textColor="#FFFFFF" />
-        
-        <TextView
-            android:id="@+id/tHelp4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:text="@string/tutorial_text_3"
-            android:textColor="#FFFFFF" />
-        
-        <TextView
-            android:id="@+id/tHelp5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:text="@string/tutorial_text_4"
-            android:textColor="#FFFFFF" />
+            <WebView
+                android:id="@+id/webView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+           </WebView>
         
          <Button
                 android:layout_width="120dp"

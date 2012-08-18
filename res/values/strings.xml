@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Stack Calculator</string>
-	<string name="tutorial_text_1">	The difference between a normal calculator and a stack Calculator is that, with the normal calculator, you have only a field with a value, and in the stack calculator you have a field stack of values</string>
-	<string name="tutorial_text_2">	When you insert the values and operations in a stack calculator, you need to first insert the values, and when you have the two values if the operation is with two values, you can apply the operation.</string>
-	<string name="tutorial_text_3">	To insert a value, you need to write the value with the number buttons and the period button and press enter. For example, if you wish do the operation 2 plus 5, you first press 2 and enter, and then press 5 and enter; now you can push the addition operation to resolve the operation.</string>
-	<string name="tutorial_text_4">	On a stack calculator you can browse between the numbers in the stack and copy it to bottom of this. You should use the button up and down to navigate in the stack. Use enter button to copy a value to the bottom, and if you wish cancel navigation, you only need press cancel button.</string>
 	<string name="sin">Sin</string>
 	<string name="cos">Cos</string>
 	<string name="tan">Tan</string>
@@ -52,4 +48,10 @@
 	<string name="clipboardCopy">Copy to clipboard</string>
 	<string name="clipboardPaste">Paste from clipboard</string>
 	<string name="value">Value:</string>
+	<string-array name="tutorial_texts">
+		<item>The difference between a normal calculator and a stack Calculator is that, with the normal calculator, you have only a field with a value, and in the stack calculator you have a field stack of values.</item>
+		<item>When you insert the values and operations in a stack calculator, you need to first insert the values, and when you have the two values if the operation is with two values, you can apply the operation.</item>
+		<item formatted='false'>To insert a value, you need to write the value with the number buttons, the period button and press enter to finalize the number insertion. For example, if you wish do the operation 2 plus 5, you first press &lt;i&gt;2&lt;/i&gt; and &lt;i&gt;enter&lt;/i&gt;, and then press &lt;i&gt;5&lt;/i&gt; and &lt;i&gt;enter&lt;/i&gt;; now you can press the addition operation button (&lt;i&gt;+&lt;/i&gt;) to resolve the operation.</item>
+		<item>On a stack calculator you can browse between the numbers in the stack and copy it to bottom of this. You can slide the stack and touch the number you wish copy to copy it to the top of the stack, if you wish copy value, delete value or paste a new value, you can did a long touch and it show you a menu with that options.</item>
+	</string-array>
 </resources>

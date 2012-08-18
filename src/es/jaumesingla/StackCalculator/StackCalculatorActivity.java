@@ -125,6 +125,7 @@ public class StackCalculatorActivity extends Activity{
 		AdView adView = (AdView) this.findViewById(R.id.adView);
 		AdRequest adRequest = new AdRequest();
 		adRequest.addTestDevice("565DD0971D493145303E3C0AA27960F7");
+		adRequest.addTestDevice("201D02A393A249A6928C1C03AA422FD7");
 		
 		//adRequest.setTesting(true);
 		adView.loadAd(adRequest);
@@ -284,7 +285,7 @@ public class StackCalculatorActivity extends Activity{
 		{
 			public void onItemClick(AdapterView<?> adapterView, View view,int arg2, long arg3)
 			{
-				mData.copyValue(arg2);
+				StackCalculatorActivity.this.historial.pushOperation(mData.copyValue(arg2));
 				showedData.notifyDataSetChanged();
 			}
 		};
@@ -305,44 +306,43 @@ public class StackCalculatorActivity extends Activity{
 		Display.setOnItemClickListener( clickListener );
 		
 		registerForContextMenu(Display);
-		//Display.setOnItemLongClickListener(longClickListener);
-		//this.refreshView();
+		
 		//updateSizeInfo();
 	}
 	
 	private void initiatePopupWindow(int layer, int layout_id, float margin) {
-    try {
-        //We need to get the instance of the LayoutInflater, use the context of this activity
-        LayoutInflater inflater = (LayoutInflater) StackCalculatorActivity.this
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //Inflate the view from a predefined XML layout
-        View layout = inflater.inflate(layer,
-                (ViewGroup) findViewById(layout_id));
-        // create a 300px width and 470px height PopupWindow
-        //View contentView = this.findViewById(R.id.Contingut);
-		//contentView.getHeight();
-        
-        View contentView = this.findViewById(R.id.Contingut);
-		int alcadaTotal = contentView.getHeight();
-		int ampladaTotal= contentView.getWidth();
-		if (horizontal){
-			ampladaTotal=(2*alcadaTotal)/3;
+		try {
+			//We need to get the instance of the LayoutInflater, use the context of this activity
+			LayoutInflater inflater = (LayoutInflater) StackCalculatorActivity.this
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			//Inflate the view from a predefined XML layout
+			View layout = inflater.inflate(layer,
+					(ViewGroup) findViewById(layout_id));
+			// create a 300px width and 470px height PopupWindow
+			//View contentView = this.findViewById(R.id.Contingut);
+					//contentView.getHeight();
+
+			View contentView = this.findViewById(R.id.Contingut);
+					int alcadaTotal = contentView.getHeight();
+					int ampladaTotal= contentView.getWidth();
+					if (horizontal){
+							ampladaTotal=(2*alcadaTotal)/3;
+					}
+			pw = new PopupWindow(layout, ampladaTotal-(int)( ampladaTotal*margin), alcadaTotal-(int)(alcadaTotal*margin), true);
+
+			//pw.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+			// display the popup in the center
+			pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+
+					//layout.setOnKeyListener(this);
+					//layout.setOnTouchListener(this);
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-        pw = new PopupWindow(layout, ampladaTotal-(int)( ampladaTotal*margin), alcadaTotal-(int)(alcadaTotal*margin), true);
-        
-        //pw.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        // display the popup in the center
-        pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-        
-		
-		//layout.setOnKeyListener(this);
-		//layout.setOnTouchListener(this);
-		
- 
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -444,7 +444,7 @@ public class StackCalculatorActivity extends Activity{
 	    switch (item.getItemId()) {
 	        case R.id.delete:
 	            Log.d(TAG, "Delete item:"+info.id);
-	            mData.deleteValue((int)info.id);
+	            historial.pushOperation(mData.deleteValue((int)info.id));
 	            return true;
 	        case R.id.copy:
 	        	Log.d(TAG, "copy item:"+info.id);
@@ -460,7 +460,7 @@ public class StackCalculatorActivity extends Activity{
 	        	//clipboard.setPrimaryClip(clip);
 	        	//clipboard.setText(mData.getListData().get((int) info.id).toString());
 	        	try{
-	        		mData.pushValue(Double.valueOf(clipboard.getText().toString()));
+	        		historial.pushOperation(mData.pushValue(Double.valueOf(clipboard.getText().toString())));
 	        	} catch (Exception e){}
 	        	return true;
 	        default:
@@ -501,7 +501,7 @@ public class StackCalculatorActivity extends Activity{
 					if (mData.getNewValue().equals("")){
 						mData.setNewValue(null);
 					} else {
-						mData.pushNewValue();
+						historial.pushOperation(mData.pushNewValue());
 					}
 				}
 				showedData.notifyDataSetChanged();
@@ -568,7 +568,7 @@ public class StackCalculatorActivity extends Activity{
 			if (nv.equals("")) {
 				mData.setNewValue(null);
 			} else {
-				mData.pushNewValue();
+				historial.pushOperation(mData.pushNewValue());
 			}
 			showedData.notifyDataSetChanged();
 		}
@@ -593,10 +593,10 @@ public class StackCalculatorActivity extends Activity{
 				writing=false;
 			}
 		} else if (!navigation) {
-			List<Double> list=mData.getListData();
-			if (list.size() > 0) {
-				mData.deleteValue();
-			}
+			//List<Double> list=mData.getListData();
+			//if (list.size() > 0) {
+			historial.pushOperation(mData.deleteValue());
+			//}
 		} else if (navigation) {
 			navigation = false;
 			Button back = (Button) this.findViewById(R.id.bDel);
@@ -762,49 +762,4 @@ public class StackCalculatorActivity extends Activity{
 		pw.dismiss();
 
 	}
-	
-	/*public void onClickElement(AdapterView adapterView, View view, int position, long id){
-		
-		int selectedPosition = adapterView.getSelectedItemPosition();
-          ShowAlert(String.valueOf(selectedPosition));
-	}
-	
-	/*public void onClick(View view){
-	Log.d("StackCalculatorActivity", "holamon-Button");
-	
-	}//*/
-
-	/*private void ShowAlert(String msg) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-				this);
- 
-			// set title
-			alertDialogBuilder.setTitle("Your Title");
- 
-			// set dialog message
-			alertDialogBuilder
-				.setMessage(msg)
-				.setCancelable(false)
-				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int id) {
-						// if this button is clicked, close
-						// current activity
-						StackCalculatorActivity.this.finish();
-					}
-				  })
-				.setNegativeButton("No",new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int id) {
-						// if this button is clicked, just close
-						// the dialog box and do nothing
-						dialog.cancel();
-					}
-				});
- 
-				// create alert dialog
-				AlertDialog alertDialog = alertDialogBuilder.create();
- 
-				// show it
-				alertDialog.show();
-			
-	}//*/
 }

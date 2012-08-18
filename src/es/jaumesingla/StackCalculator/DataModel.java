@@ -104,6 +104,30 @@ public class DataModel {
 		}
 	}
 	
+	public class NewValueUndoRedo extends UndoRedoValuesClass{
+		private Double v;
+		public NewValueUndoRedo(DataModel dm, String operation, Double v) {
+			super(dm, operation);
+			this.v=v;
+			
+		}
+
+		@Override
+		public void undo(DataModel dm) {
+			super.privateUndo(dm);
+			Double popValue=dm.popData();
+			Assert.assertEquals(popValue.doubleValue(), v.doubleValue());
+		}
+
+		@Override
+		public void redo(DataModel dm) {
+			super.privateUndo(dm);
+			dm.pushValue(v);
+			
+		}
+		
+	}
+	
 	
 	
 	private DataModel(){
@@ -152,19 +176,24 @@ public class DataModel {
 		}
 	}
 	
-	public void pushNewValue(){
+	public UndoRedo pushNewValue(){
+		UndoRedo undoredo=null;
 		if (newValue!=null){
-			listData.add(0,Double.valueOf(newValue));
+			undoredo=this.pushValue((Double.valueOf(newValue)));
 			newValue=null;
 		}
+		return undoredo;
 	}
 	
-	public void pushValue(double d){
+	public UndoRedo pushValue(double d){
+		UndoRedo undoredo=new NewValueUndoRedo(this, "New Value", d);
 		listData.add(0,d);
+		return undoredo;
 	}
 	
-	public void copyValue(int index){
-		this.pushValue(listData.get(index));
+	public UndoRedo copyValue(int index){
+		UndoRedo undoredo=this.pushValue(listData.get(index));
+		return undoredo;
 	}
 	
 	public void setNewValue(String newValue) {
@@ -179,13 +208,31 @@ public class DataModel {
 			this.newValue=newValue;
 		}
 	}
-	public void deleteValue(){
-		this.deleteValue(0);
+	public UndoRedo deleteValue(){
+		return this.deleteValue(0);
 	}
-	public void deleteValue(int id){
+	public UndoRedo deleteValue(final int id){
+		UndoRedo ret=null;
 		if (listData.size()>id){
-			listData.remove(id);
+			final Double v=listData.remove(id);
+			ret=new UndoRedoValuesClass(this, "delete") {
+				private Double val=v;
+				private int pos=id;
+				@Override
+				public void undo(DataModel dm) {
+					super.privateUndo(dm);
+					listData.add(pos, val);
+				}
+				
+				@Override
+				public void redo(DataModel dm) {
+					super.privateRedo(dm);
+					listData.remove(pos);
+					
+				}
+			};
 		}
+		return ret;
 	}
 	
 	protected Double popData(){
