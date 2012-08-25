@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Calculadora de Pila</string>
-    <string name="configuration">Configuració</string>
+	<string name="app_name">Stack Calculator</string>
+	<string name="Delete">Borrar</string>
+	<string name="Enter">Intro</string>
+	<string name="exchange">Intercanvi</string>
+	<string name="undo">Desfer</string>
+	<string name="design">Dissenyat per:</string>
+	<string name="program">Programat per:</string>
+	<string name="close">TANCAR</string>
+	<string name="configuration">Configuració</string>
+	<string name="radiants">Radiants</string>
+	<string name="degrees">Graus</string>
+	<string name="help">Ajuda</string>
+	<string name="about">Sobre l\'applicació</string>
+	<string name="delete">Borrar</string>
+	<string name="clipboardCopy">Copiar al portapapers</string>
+	<string name="clipboardPaste">Enganxa del portapaers</string>
+	<string name="value">Valor:</string>
+	<string-array name="tutorial_texts">
+		<item>La diferencia entre una calculadora normal i una calculadora de pila (Stack Calculator) és que en una calculadora normal tens sols un camp per ficar els valors, i amb una calculadora de pila tens una pila de valors.</item>
+		<item>Quant insereixes els valors i apliques les operacions en una calculadora de pila, primer has de ficar els valors que vulguis operar, i quant tinguis tots els valors ficats tu pots aplicar l\'operació/ns que vulguis.</item>
+		<item formatted='false'>Per insertar un valor, has d\'escriure el valor usant els botons de numeros, el punt i l\'enter per acabar d\'insertar el valor. Per exemple, si tu vols sumar 2 i 5, primer presiones el &lt;i&gt;2&lt;/i&gt; i l\'&lt;i&gt;enter&lt;/i&gt;, i després &lt;i&gt;5&lt;/i&gt; i l\'&lt;i&gt;enter&lt;/i&gt;; ara pots usar el boto &lt;i&gt;+&lt;/i&gt; per obtenir el resultat que t\'apareixerà en el lloc dels dos valors que havies introduit.</item>
+		<item>En una calculadora de pila com aquesta pots moure\'t per els diferents valors de la pila i copiar-los al principi d\'aquesta. Pots desplaçar-te per la pila i tucar un numero per copiar-lo, si el que vols es copiar-lo al portapapers, borrar-lo o enganxar un numero del portapapers, sols has de fer un toc prolongat perque t\'apareixi un menu desplegable amb les opcions.</item>
+	</string-array>
 </resources>

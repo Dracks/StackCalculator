@@ -249,11 +249,11 @@ public class StackCalculatorActivity extends Activity{
 			int ampladaOcupada=this.findViewById(R.id.linearLayout1).getWidth();
 			int ampladaTotal=contentView.getWidth();
 			Log.d("Debug1", " D->"+Integer.toString(ampladaOcupada)+" vs "+Integer.toString(ampladaTotal));
-			float prop=(float)ampladaTotal/(float)ampladaOcupada;;
+			float prop=(float)ampladaTotal/(float)ampladaOcupada;
 			
-			LinearLayout obj=(LinearLayout) contentView;
+			LinearLayout obj=(LinearLayout) findViewById(R.id.lVertical_buttons);//contentView;
 			
-			for (int i=1; i<obj.getChildCount()-1; i++){
+			for (int i=0; i<obj.getChildCount(); i++){
 				LinearLayout aux=(LinearLayout) obj.getChildAt(i); //Get  LinearLayoutHorizontal [1..6]
 				for (int j=0; j<aux.getChildCount(); j++){
 					View aux2=aux.getChildAt(j);
