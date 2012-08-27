@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Stack Calculator</string>
+	<string name="sin">Sen</string>
+	<string name="cos">Cos</string>
+	<string name="tan">Tan</string>
+	<string name="arcsin">Arcsen</string>
+	<string name="arccos">Arccos</string>
+	<string name="arctan">Arctan</string>
+	<string name="Fn">Fn</string>
+	<string name="pow">e^x</string>
+	<string name="ln">ln</string>
+	<string name="sqrt">√x</string>
+	<string name="powxy">x^y</string>
+	<string name="square">x^2</string>
+	<string name="log">log</string>
+	<string name="Delete">Borrar</string>
+	<string name="seven">7</string>
+	<string name="eight">8</string>
+	<string name="nine">9</string>
+	<string name="Enter">Intro</string>
+	<string name="four">4</string>
+	<string name="five">5</string>
+	<string name="six">6</string>
+	<string name="add">+</string>
+	<string name="subs">-</string>
+	<string name="minusx">-X</string>
+	<string name="one">1</string>
+	<string name="two">2</string>
+	<string name="three">3</string>
+	<string name="mult">*</string>
+	<string name="div">/</string>
+	<string name="zero">0</string>
+	<string name="dot">.</string>
+	<string name="pi">π</string>
+	<string name="inv">1/X</string>
+	<string name="exchange">Intercambio</string>
+	<string name="undo">Deshacer</string>
+	<string name="design">Diseñado por:</string>
+	<string name="program">Programado por:</string>
+	<string name="close">CERRAR</string>
+	<string name="configuration">Configuración</string>
+	<string name="radiants">Radianes</string>
+	<string name="degrees">Grados</string>
+	<string name="help">Ayuda</string>
+	<string name="about">Acerca de</string>
+	<string name="delete">Borrar</string>
+	<string name="clipboardCopy">Copiar al portapapeles</string>
+	<string name="clipboardPaste">Pegar del portapapeles</string>
+	<string name="value">Valor:</string>
+	<string-array name="tutorial_texts">
+		<item>La diferencia entre una calculadora normal y una calculadora de pila es que en la calculadora normal sólo hay un campo con un valor, y la calculadora de pila tiene una pila de campos de valores.</item>
+		<item>Para operar en una calculadora de pila, necesita introducir primero los valores y cuando los tenga cargados les puede aplicar una operación.</item>
+		<item formatted='false'>Para insertar un valor necesita escribirlo con los botones de número y pulsar intro para finalizar. Por ejemplo, si quisiera realizar la operación 2 más 5 primero deberá pulsar &lt;i&gt;2&lt;/i&gt; e &lt;i&gt;intro&lt;/i&gt;, luego pulsar &lt;i&gt;5&lt;/i&gt; e &lt;i&gt;intro&lt;/i&gt;; ahora ya puede pulsar el botón de la operación (&lt;i&gt;+&lt;/i&gt;) para finalizarla.</item>
+		<item>En una calculadora de pila puede ojear los números que hay en la pila y copiarlos en el más bajo. Puede desplazar la pila y tocar el número que quiere copiar para copiarlo en lo alto de la pila. Si quiere copiar, borrar o pegar un nuevo valor, puede mantener el toque y aparecerá un menú con estas opciones.</item>
+	</string-array>
+</resources>
