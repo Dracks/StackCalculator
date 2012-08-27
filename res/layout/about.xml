@@ -13,48 +13,86 @@
 		android:text="@string/app_name" 
 		android:textSize="25dp" 
 		android:textColor="#000000"/> -->
-	 <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:src="@drawable/logo_1i_b1" />
-	<TextView android:gravity="center" 
-		android:layout_height="wrap_content" 
-		android:layout_width="match_parent"
-		android:layout_marginTop="20dp" 
-		android:text="@string/program"  
-		android:textColor="#FFFFFF"
-		/>
-	<TextView android:gravity="center" 
-		android:layout_height="wrap_content" 
-		android:layout_width="match_parent" 
-		android:text="Jaume Singla Valls"  
-		android:textColor="#FFFFFF"
-		/>
-	<TextView android:gravity="center" 
-		android:layout_height="wrap_content" 
-		android:layout_width="match_parent" 
-		android:layout_marginTop="20dp"
-		android:text="@string/design"  
-		android:textColor="#FFFFFF"
-		/>
-	<TextView android:gravity="center" 
-		android:layout_height="wrap_content" 
-		android:layout_width="match_parent" 
-		android:text="Francesc Padros"  
-		android:textColor="#FFFFFF"
-		/>
-	<TextView android:gravity="center" 
-		android:layout_height="wrap_content" 
-		android:layout_width="match_parent" 
-		android:text="Unai Cayon"  
-		android:textColor="#FFFFFF"
-		/>
-	<Button android:background="@drawable/boto_quad_llarg" 
-		android:onClick="onClickClose" 
-		android:layout_marginTop="20dp"
-		android:layout_height="50dp"
-		android:layout_width="120dp" 
-		android:text="@string/close"/>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:src="@drawable/logo_1i_b1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/program"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Jaume Singla Valls"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/design"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Francesc Padros"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Unai Cayon"
+                android:textColor="#FFFFFF" />
+            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/thanks"
+                android:textColor="#FFFFFF" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Fernando Arroba"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/boto_quad_llarg"
+                android:onClick="onClickClose"
+                android:text="@string/close" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
