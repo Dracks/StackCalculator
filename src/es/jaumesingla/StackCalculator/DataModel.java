@@ -454,8 +454,8 @@ public class DataModel {
 		if (listData.size()>=2){
 			Double a=this.popData();
 			Double b=this.popData();
-			this.pushValue(a);
-			this.pushValue(b);
+			this.protectedPushValue(a);
+			this.protectedPushValue(b);
 			undoredo=new UndoRedoValuesClass(this, "Swap") {
 				
 				@Override
@@ -463,8 +463,8 @@ public class DataModel {
 					super.privateUndo(dm);
 					Double a=dm.popData();
 					Double b=dm.popData();
-					dm.pushValue(a);
-					dm.pushValue(b);
+					dm.protectedPushValue(a);
+					dm.protectedPushValue(b);
 				}
 				
 				@Override
@@ -472,8 +472,8 @@ public class DataModel {
 					super.privateUndo(dm);
 					Double a=dm.popData();
 					Double b=dm.popData();
-					dm.pushValue(a);
-					dm.pushValue(b);
+					dm.protectedPushValue(a);
+					dm.protectedPushValue(b);
 				}
 			};
 		}
