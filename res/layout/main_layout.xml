@@ -10,7 +10,7 @@
               xsi:schemaLocation="http://schemas.android.com/apk/lib/com.google.ads ">
 	
     <include
-		    android:layout_width="wrap_content"
+		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    layout="@layout/screen" />
 		<!-- <ListView

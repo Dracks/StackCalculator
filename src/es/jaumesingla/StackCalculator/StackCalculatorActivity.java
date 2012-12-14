@@ -126,6 +126,8 @@ public class StackCalculatorActivity extends Activity{
 		AdRequest adRequest = new AdRequest();
 		adRequest.addTestDevice("565DD0971D493145303E3C0AA27960F7");
 		adRequest.addTestDevice("201D02A393A249A6928C1C03AA422FD7");
+		adRequest.addTestDevice("571209AE69A03D51D6FEA220ADBFEC08");
+		adRequest.addTestDevice("038BA9B7CD44FCED14989DFD502D935F");
 		
 		//adRequest.setTesting(true);
 		adView.loadAd(adRequest);
