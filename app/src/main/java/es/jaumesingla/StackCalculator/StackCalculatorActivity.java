@@ -22,7 +22,6 @@ import android.widget.EditText;
 
 
 import android.widget.PopupWindow;
-import com.google.ads.*;
 
 import es.jaumesingla.StackCalculator.AngleConversor.ConversorInterface;
 import es.jaumesingla.StackCalculator.AngleConversor.DegreeConversor;
@@ -55,15 +54,6 @@ public class StackCalculatorActivity extends Activity {
 		setContentView(R.layout.layouts);
 		//this.refreshView();
 
-		//Publicitat
-		// Look up the AdView as a resource and load a request.
-		AdView adView = (AdView) this.findViewById(R.id.adView);
-		AdRequest adRequest = new AdRequest();
-		adRequest.addTestDevice("38309AC626B900EC");
-		// adRequest.setTestDevices("953C629AF51EC113C8C153493876C11F");
-		adRequest.setTesting(true);
-		adView.loadAd(adRequest);
-
 		this.conv = new RadiantConversor();
 		//nLines=5;
 	}
@@ -72,26 +62,10 @@ public class StackCalculatorActivity extends Activity {
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 
-
-		//Calcul de tamany de la pantalla
-		View contentView = this.findViewById(R.id.Contingut);
-		int alcadaTotal = contentView.getHeight();
-		//Log.i("stackCalculatorActivity", "Pre Al�ada total de:" + Integer.toString(alcadaTotal));
-		alcadaTotal -= this.findViewById(R.id.linearLayout1).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout2).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout3).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout4).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout5).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout6).getHeight();
-		alcadaTotal -= this.findViewById(R.id.linearLayout7).getHeight();
-		//this.findViewById(R.id.Display).setLayoutParams(new LayoutParams(this.findViewById(R.id.Display).getHeight(), alcadaTotal));
 		EditText Display = (EditText) this.findViewById(R.id.Display);
-		Display.getLayoutParams().height = alcadaTotal;
-		nLines = alcadaTotal / Display.getLineHeight() - 1;
-		//Log.i("stackCalculatorActivity", "Al�ada total de:" + Integer.toString(alcadaTotal));
+		nLines = Display.getHeight() / Display.getLineHeight() - 1;
 
 		this.refreshView();
-		//updateSizeInfo();
 	}
 
 	@Override
@@ -115,7 +89,7 @@ public class StackCalculatorActivity extends Activity {
 		// This bundle has also been passed to onCreate.
 		int Size = savedInstanceState.getInt("StackSize");
 		for (int i = 0; i < Size; i++) {
-			stack.addLast(new Double(savedInstanceState.getDouble("Row " + Integer.toString(i))));
+			stack.addLast(Double.valueOf(savedInstanceState.getDouble("Row " + Integer.toString(i))));
 		}
 		switch (savedInstanceState.getInt("AngleConversor")) {
 			case 0:
@@ -322,7 +296,7 @@ public class StackCalculatorActivity extends Activity {
 		} else if (keyCode == KeyEvent.KEYCODE_ENTER) {
 			if (writing) {
 				if (!write.equals("")) {
-					stack.addFirst(new Double(write));
+					stack.addFirst(Double.valueOf(write));
 				}
 				write = "";
 			} else {
@@ -401,7 +375,7 @@ public class StackCalculatorActivity extends Activity {
 	public void onClickEnter(View view) {
 		if (writing) {
 			if (!write.equals("")) {
-				stack.addFirst(new Double(write));
+				stack.addFirst(Double.valueOf(write));
 			}
 			write = "";
 		} else {
@@ -462,7 +436,7 @@ public class StackCalculatorActivity extends Activity {
 			stack.removeFirst();
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(a + b));
+			stack.addFirst(Double.valueOf(a + b));
 		}
 		this.refreshView();
 	}
@@ -472,13 +446,13 @@ public class StackCalculatorActivity extends Activity {
 		if (shifted && stack.size() >= 1 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(-a));
+			stack.addFirst(Double.valueOf(-a));
 		} else if (stack.size() >= 2 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(b - a));
+			stack.addFirst(Double.valueOf(b - a));
 		} else if (writing) {
 			if (Double.valueOf(write) < 0) {
 				write = write.substring(1);
@@ -497,7 +471,7 @@ public class StackCalculatorActivity extends Activity {
 			stack.removeFirst();
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(a * b));
+			stack.addFirst(Double.valueOf(a * b));
 		}
 		this.refreshView();
 
@@ -509,11 +483,11 @@ public class StackCalculatorActivity extends Activity {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			if (shifted) {
-				stack.addFirst(new Double(1 / a));
+				stack.addFirst(Double.valueOf(1 / a));
 			} else {
 				double b = stack.getFirst().doubleValue();
 				stack.removeFirst();
-				stack.addFirst(new Double(b / a));
+				stack.addFirst(Double.valueOf(b / a));
 			}
 		}
 		this.refreshView();
@@ -526,7 +500,7 @@ public class StackCalculatorActivity extends Activity {
 			stack.removeFirst();
 			double b = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(Math.pow(b, a)));
+			stack.addFirst(Double.valueOf(Math.pow(b, a)));
 		}
 		this.refreshView();
 
@@ -537,7 +511,7 @@ public class StackCalculatorActivity extends Activity {
 		if (stack.size() >= 1 && !writing && !navigation) {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
-			stack.addFirst(new Double(Math.sqrt(a)));
+			stack.addFirst(Double.valueOf(Math.sqrt(a)));
 		}
 		this.refreshView();
 	}
@@ -547,9 +521,9 @@ public class StackCalculatorActivity extends Activity {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			if (!shifted) {
-				stack.addFirst(new Double(Math.sin(conv.toProcess(a))));
+				stack.addFirst(Double.valueOf(Math.sin(conv.toProcess(a))));
 			} else {
-				stack.addFirst(new Double(conv.toShow(Math.asin(a))));
+				stack.addFirst(Double.valueOf(conv.toShow(Math.asin(a))));
 			}
 		}
 		this.refreshView();
@@ -561,9 +535,9 @@ public class StackCalculatorActivity extends Activity {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			if (!shifted) {
-				stack.addFirst(new Double(Math.cos(conv.toProcess(a))));
+				stack.addFirst(Double.valueOf(Math.cos(conv.toProcess(a))));
 			} else {
-				stack.addFirst(new Double(conv.toShow(Math.acos(a))));
+				stack.addFirst(Double.valueOf(conv.toShow(Math.acos(a))));
 			}
 		}
 		this.refreshView();
@@ -574,9 +548,9 @@ public class StackCalculatorActivity extends Activity {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			if (!shifted) {
-				stack.addFirst(new Double(Math.tan(conv.toProcess(a))));
+				stack.addFirst(Double.valueOf(Math.tan(conv.toProcess(a))));
 			} else {
-				stack.addFirst(new Double(conv.toShow(Math.atan(a))));
+				stack.addFirst(Double.valueOf(conv.toShow(Math.atan(a))));
 			}
 		}
 		this.refreshView();
@@ -587,7 +561,7 @@ public class StackCalculatorActivity extends Activity {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			//if (!shifted)
-			stack.addFirst(new Double(Math.pow(Math.E, a)));
+			stack.addFirst(Double.valueOf(Math.pow(Math.E, a)));
 		}
 		this.refreshView();
 	}
@@ -597,9 +571,9 @@ public class StackCalculatorActivity extends Activity {
 			double a = stack.getFirst().doubleValue();
 			stack.removeFirst();
 			if (shifted) {
-				stack.addFirst(new Double(Math.log10(a)));
+				stack.addFirst(Double.valueOf(Math.log10(a)));
 			} else {
-				stack.addFirst(new Double(Math.log(a)));
+				stack.addFirst(Double.valueOf(Math.log(a)));
 			}
 		}
 		this.refreshView();
@@ -607,7 +581,7 @@ public class StackCalculatorActivity extends Activity {
 
 	public void onClickPi(View view) {
 		if (stack.size() >= 1 && !writing && !navigation) {
-			stack.addFirst(new Double(Math.PI));
+			stack.addFirst(Double.valueOf(Math.PI));
 		}
 		this.refreshView();
 	}
@@ -616,8 +590,4 @@ public class StackCalculatorActivity extends Activity {
 		pw.dismiss();
 
 	}
-	/*public void onClick(View view){
-	Log.d("StackCalculatorActivity", "holamon-Button");
-	
-	}//*/
 };

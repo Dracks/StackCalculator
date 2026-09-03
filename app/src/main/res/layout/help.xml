@@ -2,8 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lHelp"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/fons_1i"
         android:padding="15dp"
         android:gravity="bottom"
@@ -12,11 +12,11 @@
 
      <ScrollView android:id="@+id/linearLayout1"
          android:scrollbarStyle="insideOverlay"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:isScrollContainer="true"
@@ -34,7 +34,7 @@
 
        <ImageView
            android:id="@+id/imageView1"
-           android:layout_width="fill_parent"
+           android:layout_width="match_parent"
            android:layout_height="45dp"
            android:src="@drawable/logo_1i_b1" />
  

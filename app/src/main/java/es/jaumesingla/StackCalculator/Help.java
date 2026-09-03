@@ -2,8 +2,6 @@ package es.jaumesingla.StackCalculator;
 
 import java.util.Random;
 
-import junit.framework.Assert;
-
 import android.app.Activity;
 import android.graphics.Paint;
 import android.graphics.Rect;
